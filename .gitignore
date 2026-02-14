@@ -1,0 +1,12 @@
+vitePlus-vitePlus/node_modules/
+docker_data/
+docker_log/
+harbor/
+redis/
+model-backend/modeling-platform-springboot-backend/docker.env
+
+*.tgz
+*.tar.gz
+
+.env
+*.env

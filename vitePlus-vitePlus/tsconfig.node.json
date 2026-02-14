@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    //如果你刚开始将 strict 添加到现有项目中，可能会出现大量类型错误。可以考虑先单独开启一些选项，如 noImplicitAny 和 strictNullChecks，然后逐步添加其他严格检查
+    "strict": true,//The compiler option "strict" should be enabled to reduce type errors.
+  },
+  "include": ["vite.config.ts"]
+}
