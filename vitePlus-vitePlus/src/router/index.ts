@@ -84,6 +84,11 @@ const router = createRouter({
 
 // 路由守卫：有 token 时用 CheckLogin 校验；无 token 或校验明确失败则跳登录
 router.beforeEach((to, from, next) => {
+  // 开发环境跳过认证：用于无后端服务时预览前端样式
+  if (import.meta.env.VITE_SKIP_AUTH === 'true') {
+    next();
+    return;
+  }
   const myToken = getStoredToken();
   if (to.path === '/login' || to.path === '/register') {
     next();
