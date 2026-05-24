@@ -222,11 +222,11 @@ const timeValue1 = ref<string[]>([])
 const timeValue2 = ref<string[]>([])
 const timeValue3 = ref<string[]>([])
 const tableHeaderStyle = {
-  background: '#4c75a3',
+  background: '#d32f2f',
   color: '#ffffff',
   fontSize: '14px',
   fontWeight: '600',
-  borderColor: '#1a2942',
+  borderColor: '#a82525',
   textAlign: 'center',
   padding: '12px 0',
   height: '50px'
@@ -462,11 +462,11 @@ function initChart(): void {
           data: chartData.yData,
           type: 'line',
           lineStyle: {
-            color: '#4c75a3',
+            color: '#d32f2f',
             width: 3
           },
           itemStyle: {
-            color: '#1a2942'
+            color: '#a82525'
           },
           areaStyle: {
             color: {
@@ -476,9 +476,9 @@ function initChart(): void {
               x2: 0,
               y2: 1,
               colorStops: [{
-                offset: 0, color: 'rgba(76, 117, 163, 0.3)'
+                offset: 0, color: 'rgba(211, 47, 47, 0.3)'
               }, {
-                offset: 1, color: 'rgba(76, 117, 163, 0.05)'
+                offset: 1, color: 'rgba(211, 47, 47, 0.05)'
               }],
             }
           }
@@ -538,9 +538,9 @@ function initChart(): void {
               x2: 0,
               y2: 1,
               colorStops: [{
-                offset: 0, color: '#1a2942'
+                offset: 0, color: '#a82525'
               }, {
-                offset: 1, color: '#4c75a3'
+                offset: 1, color: '#d32f2f'
               }],
             }
           }
@@ -601,7 +601,7 @@ function initChart(): void {
               }
               
               // 默认颜色
-              return '#4c75a3'  // 蓝色
+              return '#d32f2f'  // 蓝色
             }
           }
         }
@@ -739,7 +739,7 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border-radius: 8px;
   color: white;
   margin: 20px;
@@ -815,13 +815,13 @@ onMounted(() => {
 }
 
 :deep(.el-menu--horizontal > .el-menu-item.is-active) {
-  color: #4c75a3;
-  border-bottom: 2px solid #4c75a3;
+  color: #d32f2f;
+  border-bottom: 2px solid #d32f2f;
 }
 
 :deep(.el-menu-item:not(.is-active):hover) {
-  color: #4c75a3 !important;
-  background-color: rgba(76, 117, 163, 0.05);
+  color: #d32f2f !important;
+  background-color: rgba(211, 47, 47, 0.05);
 }
 
 /* 图表区域 */
@@ -930,7 +930,7 @@ onMounted(() => {
 }
 
 :deep(.el-loading-spinner .path) {
-  stroke: #4c75a3;
+  stroke: #d32f2f;
   stroke-width: 2;
 }
 
@@ -1013,7 +1013,7 @@ onMounted(() => {
 
 /* 表格标题区域 */
 .table-header {
-  background: #4c75a3;
+  background: #d32f2f;
   color: white;
   padding: 15px 20px;
   border-top-left-radius: 8px;
@@ -1049,7 +1049,7 @@ onMounted(() => {
 
 :deep(.el-table__header-wrapper th.el-table__cell) {
   background-color: #e8f0f9;
-  color: #4c75a3;
+  color: #d32f2f;
   border-color: #e8f0f9; /* 与背景同色，消除边框 */
   border-bottom: 1px solid #d0e0f2; /* 只保留底部边框 */
 }
@@ -1148,12 +1148,12 @@ onMounted(() => {
 /* 请求数量和平均值样式优化 */
 .request-count {
   font-weight: 600;
-  color: #4c75a3;
+  color: #d32f2f;
 }
 
 .avg-value {
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
 }
 
 /* 饼图样式匹配 */

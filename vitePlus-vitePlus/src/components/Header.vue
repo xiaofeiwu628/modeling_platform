@@ -277,7 +277,7 @@ function executeLogoff() {// 执行注销账号操作
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  background: linear-gradient(to right, #234d7a, #4c75a3); /* 与DataScreen一致的颜色 */
+  background: #d32f2f; /* 与DataScreen一致的颜色 */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 0;
@@ -341,7 +341,7 @@ function executeLogoff() {// 执行注销账号操作
 }
 
 .user-avatar {
-  background-color: #1a2942;
+  background-color: #a82525;
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
@@ -390,7 +390,7 @@ function executeLogoff() {// 执行注销账号操作
 .title {
   margin: 0px auto 30px auto;
   text-align: center;
-  color: #1a2942;
+  color: #a82525;
   font-weight: 600;
 }
 

@@ -97,7 +97,7 @@
             v-loading="myImageLoading" 
             :row-style="{ height: '65px' }"
             :cell-style="{ 'text-align': 'center' }"
-            :header-cell-style="{ 'text-align': 'center', background: '#1a2942', color: '#fff' }"
+            :header-cell-style="{ 'text-align': 'center', background: '#a82525', color: '#fff' }"
             class="image-table"
           >
             <el-table-column type="expand" min-width="3%">
@@ -239,7 +239,7 @@
             v-loading="publicImageLoading" 
             :row-style="{ height: '65px' }"
             :cell-style="{ 'text-align': 'center' }"
-            :header-cell-style="{ 'text-align': 'center', background: '#1a2942', color: '#fff' }"
+            :header-cell-style="{ 'text-align': 'center', background: '#a82525', color: '#fff' }"
             class="image-table"
           >
             <el-table-column type="expand" min-width="3%">
@@ -1102,7 +1102,7 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(to right, #4c75a3, #4c75a3);
+  background: linear-gradient(to right, #d32f2f, #d32f2f);
   border-radius: 8px;
   color: white;
   margin: 20px;
@@ -1186,8 +1186,8 @@ onMounted(() => {
 }
 
 :deep(.el-menu-m .el-menu-item.is-active) {
-  background-color: rgba(76, 117, 163, 0.1);
-  color: #4c75a3;
+  background-color: rgba(211, 47, 47, 0.1);
+  color: #d32f2f;
 }
 
 .action-bar {
@@ -1229,9 +1229,9 @@ onMounted(() => {
 }
 
 .refresh-btn {
-  color: #4c75a3;
-  background-color: rgba(76, 117, 163, 0.05);
-  border-color: #4c75a3;
+  color: #d32f2f;
+  background-color: rgba(211, 47, 47, 0.05);
+  border-color: #d32f2f;
   padding: 8px 16px;
   display: flex;
   align-items: center;
@@ -1241,9 +1241,9 @@ onMounted(() => {
 }
 
 .refresh-btn:hover {
-  background-color: rgba(76, 117, 163, 0.15);
+  background-color: rgba(211, 47, 47, 0.15);
   transform: translateY(-2px);
-  box-shadow: 0 3px 8px rgba(76, 117, 163, 0.2);
+  box-shadow: 0 3px 8px rgba(211, 47, 47, 0.2);
 }
 
 .refresh-icon {
@@ -1407,7 +1407,7 @@ onMounted(() => {
 
 /* 上传组件样式 */
 :deep(.el-upload-dragger) {
-  border: 2px dashed #4c75a3;
+  border: 2px dashed #d32f2f;
   transition: all 0.3s;
 }
 
@@ -1418,7 +1418,7 @@ onMounted(() => {
 
 :deep(.el-icon--upload) {
   font-size: 48px;
-  color: #4c75a3;
+  color: #d32f2f;
   margin-bottom: 10px;
 }
 
@@ -1429,13 +1429,13 @@ onMounted(() => {
 }
 
 :deep(.el-upload__text em) {
-  color: #4c75a3;
+  color: #d32f2f;
   font-style: normal;
   font-weight: 600;
 }
 /* 修改镜像创建按钮样式，与DataScreen保持一致 */
 .create-btn {
-  background: linear-gradient(to right, #1a2942, #2a476e);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
   border-radius: 6px;
   transition: all 0.3s;
@@ -1447,9 +1447,9 @@ onMounted(() => {
 }
 
 .create-btn:hover {
-  background: linear-gradient(to right, #2a476e, #1a2942);
+  background: linear-gradient(to right, #d32f2f, #a82525);
   transform: translateY(-1px);
-  box-shadow: 0 5px 15px rgba(26, 41, 66, 0.2);
+  box-shadow: 0 5px 15px rgba(168, 37, 37, 0.2);
 }
 
 .create-btn .el-icon {
@@ -1470,7 +1470,7 @@ onMounted(() => {
 
 :deep(.el-dialog__header) {
   position: relative;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   padding: 16px 20px;
   margin-right: 0;
   border-bottom: 1px solid #eaeaea;
@@ -1533,7 +1533,7 @@ onMounted(() => {
 /* 表单项样式优化 */
 :deep(.el-form-item__label) {
   font-weight: 500;
-  color: #1a2942;
+  color: #a82525;
 }
 
 :deep(.el-input__inner) {
@@ -1542,12 +1542,12 @@ onMounted(() => {
 }
 
 :deep(.el-input__inner:hover) {
-  border-color: #4c75a3;
+  border-color: #d32f2f;
 }
 
 :deep(.el-input__inner:focus) {
-  border-color: #1a2942;
-  box-shadow: 0 0 0 2px rgba(26, 41, 66, 0.2);
+  border-color: #a82525;
+  box-shadow: 0 0 0 2px rgba(168, 37, 37, 0.2);
 }
 
 :deep(.el-textarea__inner) {
@@ -1556,12 +1556,12 @@ onMounted(() => {
 }
 
 :deep(.el-textarea__inner:hover) {
-  border-color: #4c75a3;
+  border-color: #d32f2f;
 }
 
 :deep(.el-textarea__inner:focus) {
-  border-color: #1a2942;
-  box-shadow: 0 0 0 2px rgba(26, 41, 66, 0.2);
+  border-color: #a82525;
+  box-shadow: 0 0 0 2px rgba(168, 37, 37, 0.2);
 }
 
 /* 镜像修改对话框 */
@@ -1571,14 +1571,14 @@ onMounted(() => {
 
 /* 上传文件对话框 */
 .upload-dialog :deep(.el-upload-dragger) {
-  border: 2px dashed #4c75a3;
+  border: 2px dashed #d32f2f;
   background-color: #f8fafc;
   border-radius: 8px;
   transition: all 0.3s;
 }
 
 .upload-dialog :deep(.el-upload-dragger:hover) {
-  border-color: #1a2942;
+  border-color: #a82525;
   background-color: #f0f7ff;
   transform: translateY(-2px);
 }
@@ -1589,7 +1589,7 @@ onMounted(() => {
 }
 
 .upload-dialog :deep(.el-upload__text em) {
-  color: #4c75a3;
+  color: #d32f2f;
   font-style: normal;
   font-weight: 600;
 }
@@ -1679,7 +1679,7 @@ onMounted(() => {
 }
 
 :deep(.el-dialog__footer .el-button--primary) {
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
   font-weight: 500;
   transition: all 0.3s;
@@ -1688,6 +1688,6 @@ onMounted(() => {
 :deep(.el-dialog__footer .el-button--primary:hover) {
   opacity: 0.9;
   transform: translateY(-1px);
-  box-shadow: 0 3px 8px rgba(26, 41, 66, 0.2);
+  box-shadow: 0 3px 8px rgba(168, 37, 37, 0.2);
 }
 </style>

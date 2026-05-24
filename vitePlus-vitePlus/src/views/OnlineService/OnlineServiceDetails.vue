@@ -282,12 +282,12 @@ export default {
       },
       tableHeaderStyle: {
         background: '#f0f5fa',
-        color: '#1a2942',
+        color: '#a82525',
         fontSize: '14px',
         fontWeight: '600',
         textAlign: 'center',
         padding: '12px 0',
-        borderBottom: '2px solid #4c75a3',
+        borderBottom: '2px solid #d32f2f',
       },
       tableCellStyle: {
         textAlign: 'center',
@@ -377,11 +377,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 24px 32px;
-  background: linear-gradient(135deg, #1a2942, #4c75a3);
+  background: linear-gradient(135deg, #a82525, #d32f2f);
   border-radius: 12px;
   color: white;
   margin: 20px 20px 0;
-  box-shadow: 0 8px 20px rgba(26, 41, 66, 0.15);
+  box-shadow: 0 8px 20px rgba(168, 37, 37, 0.15);
   position: relative;
   overflow: hidden;
 }
@@ -484,7 +484,7 @@ export default {
 .section-line {
   width: 5px;
   height: 24px;
-  background: linear-gradient(to bottom, #1a2942, #4c75a3);
+  background: linear-gradient(to bottom, #a82525, #d32f2f);
   border-radius: 3px;
   margin-right: 15px;
 }
@@ -492,7 +492,7 @@ export default {
 .section-title {
   font-size: 18px;
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
   letter-spacing: 0.5px;
 }
 
@@ -514,12 +514,12 @@ export default {
 }
 
 :deep(.el-form-item:hover) {
-  border-left-color: #4c75a3;
+  border-left-color: #d32f2f;
 }
 
 :deep(.el-form-item__label) {
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
   font-size: 15px;
 }
 
@@ -662,7 +662,7 @@ export default {
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -679,9 +679,9 @@ export default {
   justify-content: center;
   border-radius: 12px;
   margin-right: 24px;
-  background: linear-gradient(135deg, rgba(76, 117, 163, 0.2), rgba(76, 117, 163, 0.1));
-  color: #4c75a3;
-  box-shadow: 0 4px 10px rgba(76, 117, 163, 0.15);
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.2), rgba(211, 47, 47, 0.1));
+  color: #d32f2f;
+  box-shadow: 0 4px 10px rgba(211, 47, 47, 0.15);
   transition: transform 0.3s ease;
 }
 
@@ -690,9 +690,9 @@ export default {
 }
 
 .memory-icon {
-  background: linear-gradient(135deg, rgba(26, 41, 66, 0.2), rgba(26, 41, 66, 0.1));
-  color: #1a2942;
-  box-shadow: 0 4px 10px rgba(26, 41, 66, 0.15);
+  background: linear-gradient(135deg, rgba(168, 37, 37, 0.2), rgba(168, 37, 37, 0.1));
+  color: #a82525;
+  box-shadow: 0 4px 10px rgba(168, 37, 37, 0.15);
 }
 
 .resource-data {
@@ -703,7 +703,7 @@ export default {
 .resource-value {
   font-size: 26px;
   font-weight: 700;
-  color: #1a2942;
+  color: #a82525;
   margin-bottom: 8px;
   letter-spacing: 0.5px;
 }
@@ -733,7 +733,7 @@ export default {
   border: 1px solid #ebeef5;
   font-size: 14px;
   word-break: break-all;
-  color: #1a2942;
+  color: #a82525;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
   position: relative;
 }

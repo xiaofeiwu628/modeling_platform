@@ -192,7 +192,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border-radius: 8px;
   color: white;
   margin: 20px;
@@ -235,7 +235,7 @@ export default {
   margin-bottom: 20px;
   background: #f8f9fa;
   border-radius: 8px;
-  border-left: 4px solid #4c75a3;
+  border-left: 4px solid #d32f2f;
 }
 
 .statistic-tile {
@@ -248,7 +248,7 @@ export default {
 .statistic-value {
   font-size: 24px;
   font-weight: 700;
-  color: #1a2942;
+  color: #a82525;
 }
 
 .statistic-label {
@@ -267,7 +267,7 @@ export default {
 }
 
 .export-btn {
-  background: linear-gradient(to right, #1a2942, #2a476e);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
   display: flex;
   align-items: center;
@@ -279,7 +279,7 @@ export default {
 
 .export-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(26, 41, 66, 0.2);
+  box-shadow: 0 5px 15px rgba(168, 37, 37, 0.2);
 }
 
 /* 表格区域 */
@@ -301,7 +301,7 @@ export default {
 
 :deep(.el-table th) {
   background-color: #f2f6fc;
-  color: #1a2942;
+  color: #a82525;
   font-weight: 600;
 }
 
@@ -333,10 +333,10 @@ export default {
 }
 
 :deep(.el-pagination.is-background .el-pager li:not(.is-disabled).is-active) {
-  background-color: #1a2942;
+  background-color: #a82525;
 }
 
 :deep(.el-pagination.is-background .el-pager li:not(.is-disabled):hover) {
-  color: #1a2942;
+  color: #a82525;
 }
 </style>

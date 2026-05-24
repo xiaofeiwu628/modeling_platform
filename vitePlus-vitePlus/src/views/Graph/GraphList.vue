@@ -53,7 +53,7 @@
           class="data-table"
           style="width: 100%"
           :cell-style="{ 'text-align': 'center' }"
-          :header-cell-style="{ 'text-align': 'center', background: '#1a2942', color: '#fff', fontWeight: '600' }"
+          :header-cell-style="{ 'text-align': 'center', background: '#a82525', color: '#fff', fontWeight: '600' }"
         >
         <el-table-column prop="name" label="图谱名称" min-width="140" show-overflow-tooltip>
           <template #default="{ row }">
@@ -542,7 +542,7 @@ onMounted(() => load())
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(to right, #4c75a3, #4c75a3);
+  background: linear-gradient(to right, #d32f2f, #d32f2f);
   border-radius: 8px;
   color: white;
   margin: 20px;
@@ -642,7 +642,7 @@ onMounted(() => load())
 
 .create-btn,
 .search-btn {
-  background: linear-gradient(to right, #1a2942, #2a476e);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
   border-radius: 6px;
   transition: all 0.3s;
@@ -650,9 +650,9 @@ onMounted(() => load())
 
 .create-btn:hover,
 .search-btn:hover {
-  background: linear-gradient(to right, #2a476e, #1a2942);
+  background: linear-gradient(to right, #d32f2f, #a82525);
   transform: translateY(-1px);
-  box-shadow: 0 5px 15px rgba(26, 41, 66, 0.2);
+  box-shadow: 0 5px 15px rgba(168, 37, 37, 0.2);
 }
 
 .table-container {
@@ -672,7 +672,7 @@ onMounted(() => load())
 }
 
 :deep(.el-button.is-link) {
-  color: #1a2942;
+  color: #a82525;
 }
 
 .table-container .pagination-wrap {

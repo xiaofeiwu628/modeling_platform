@@ -70,7 +70,7 @@
             border
             stripe
             :cell-style="{ 'text-align': 'center' }"
-            :header-cell-style="{ 'text-align': 'center', background: '#1a2942', color: '#fff' }"
+            :header-cell-style="{ 'text-align': 'center', background: '#a82525', color: '#fff' }"
             style="width: 100%"
           >
             <el-table-column type="expand">
@@ -87,7 +87,7 @@
                   class="expanded-table"
                   border 
                   stripe
-                  :header-cell-style="{ background: '#f5f7fa', color: '#1a2942', fontWeight: 600 }"
+                  :header-cell-style="{ background: '#f5f7fa', color: '#a82525', fontWeight: 600 }"
                   >
                   <el-table-column prop="table_id" label="数据表ID" min-width="13%" />
                   <el-table-column prop="table_name" label="数据表名称" min-width="13%" />
@@ -1293,7 +1293,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(to right, #4c75a3, #4c75a3); /* 更浅的蓝色渐变 */
+  background: linear-gradient(to right, #d32f2f, #d32f2f); /* 更浅的蓝色渐变 */
   border-radius: 8px;
   color: white;
   margin: 20px;
@@ -1396,16 +1396,16 @@ export default {
 }
 
 .create-btn, .search-btn {
-  background: linear-gradient(to right, #1a2942, #2a476e);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
   border-radius: 6px;
   transition: all 0.3s;
 }
 
 .create-btn:hover, .search-btn:hover {
-  background: linear-gradient(to right, #2a476e, #1a2942);
+  background: linear-gradient(to right, #d32f2f, #a82525);
   transform: translateY(-1px);
-  box-shadow: 0 5px 15px rgba(26, 41, 66, 0.2);
+  box-shadow: 0 5px 15px rgba(168, 37, 37, 0.2);
 }
 
 .table-container {
@@ -1430,7 +1430,7 @@ export default {
 }
 
 :deep(.el-button.is-link) {
-  color: #1a2942;
+  color: #a82525;
 }
 
 :deep(.el-button.is-text) {
@@ -1439,7 +1439,7 @@ export default {
 
 /* 优化扩展行的样式 */
 :deep(.el-table__expand-icon) {
-  color: #1a2942;
+  color: #a82525;
 }
 
 :deep(.el-table__expanded-cell) {
@@ -1481,12 +1481,12 @@ export default {
 
 /* 查看按钮样式 */
 .view-btn {
-  color: #1a2942 !important;
+  color: #a82525 !important;
 }
 
 .view-btn:hover {
-  color: #4c75a3 !important;
-  background-color: rgba(76, 117, 163, 0.05);
+  color: #d32f2f !important;
+  background-color: rgba(211, 47, 47, 0.05);
 }
 
 /* 新增按钮样式 */
@@ -1536,7 +1536,7 @@ export default {
 }
 
 :deep(.el-table__expand-icon .el-icon) {
-  color: #4c75a3; /* 使用与头部一致的蓝色 */
+  color: #d32f2f; /* 使用与头部一致的蓝色 */
   font-weight: bold;
   font-size: 16px;
 }
@@ -1548,7 +1548,7 @@ export default {
 
 /* 鼠标悬浮在行上时的展开图标效果 */
 :deep(.el-table__row:hover .el-table__expand-icon .el-icon) {
-  color: #1a2942;
+  color: #a82525;
   transform: scale(1.1);
 }
 
@@ -1574,7 +1574,7 @@ export default {
 .expanded-table-title {
   font-size: 16px;
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1587,7 +1587,7 @@ export default {
 }
 
 :deep(.el-table__row-is-expand-row-expandable:hover) {
-  background-color: rgba(76, 117, 163, 0.05) !important;
+  background-color: rgba(211, 47, 47, 0.05) !important;
 }
 
 /* 展开后的子表格样式 */
@@ -1604,14 +1604,14 @@ export default {
 /* 修改数据集行样式，使其更加醒目 */
 :deep(.data-table .el-table__row) {
   background-color: #f8fafd !important;
-  border-left: 4px solid #4c75a3;
+  border-left: 4px solid #d32f2f;
   height: 60px !important;
 }
 
 :deep(.data-table .el-table__row:hover) {
   background-color: #edf2f9 !important;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(76, 117, 163, 0.12);
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.12);
 }
 
 /* 使数据集名称更加醒目 */
@@ -1624,7 +1624,7 @@ export default {
 :deep(.data-table .el-table__row td:nth-child(5) .cell) {
   font-weight: 600;
   font-size: 15px;
-  color: #1a2942;
+  color: #a82525;
 }
 
 /* 添加数据集标识图标 */
@@ -1641,8 +1641,8 @@ export default {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #4c75a3;
-  box-shadow: 0 0 0 2px rgba(76, 117, 163, 0.2);
+  background-color: #d32f2f;
+  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
 }
 
 /* 行间距和分隔 */

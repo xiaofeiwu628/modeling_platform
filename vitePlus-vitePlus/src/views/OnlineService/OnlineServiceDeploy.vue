@@ -913,7 +913,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border-radius: 8px;
   color: white;
   margin: 20px;
@@ -985,7 +985,7 @@ export default {
 .section-title-indicator {
   width: 4px;
   height: 16px;
-  background: linear-gradient(to bottom, #1a2942, #4c75a3);
+  background: linear-gradient(to bottom, #a82525, #d32f2f);
   margin-right: 10px;
   border-radius: 2px;
 }
@@ -1046,23 +1046,23 @@ export default {
 :deep(.el-input__wrapper:hover),
 :deep(.el-select__wrapper:hover),
 :deep(.el-input-number:hover .el-input__wrapper) {
-  box-shadow: 0 0 0 1px #4c75a3 inset;
+  box-shadow: 0 0 0 1px #d32f2f inset;
 }
 
 :deep(.el-input__wrapper.is-focus),
 :deep(.el-select__wrapper.is-focus),
 :deep(.el-input-number.is-focus .el-input__wrapper) {
-  box-shadow: 0 0 0 1px #4c75a3 inset !important;
+  box-shadow: 0 0 0 1px #d32f2f inset !important;
 }
 
 /* 单选按钮样式 */
 :deep(.el-radio__input.is-checked .el-radio__inner) {
-  border-color: #4c75a3;
-  background: #4c75a3;
+  border-color: #d32f2f;
+  background: #d32f2f;
 }
 
 :deep(.el-radio__input.is-checked + .el-radio__label) {
-  color: #4c75a3;
+  color: #d32f2f;
 }
 
 /* 资源配置样式 */
@@ -1104,16 +1104,16 @@ export default {
 }
 
 .add-env-btn {
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
   transition: all 0.3s;
   font-weight: 500;
 }
 
 .add-env-btn:hover {
-  background: linear-gradient(to right, #253550, #5c85b3);
+  background: linear-gradient(to right, #a82525, #c62828);
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(26, 41, 66, 0.2);
+  box-shadow: 0 2px 8px rgba(168, 37, 37, 0.2);
 }
 
 .env-list {
@@ -1165,15 +1165,15 @@ export default {
 }
 
 .primary-button {
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
   transition: all 0.3s;
 }
 
 .primary-button:hover {
-  background: linear-gradient(to right, #253550, #5c85b3);
+  background: linear-gradient(to right, #a82525, #c62828);
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(26, 41, 66, 0.2);
+  box-shadow: 0 2px 8px rgba(168, 37, 37, 0.2);
 }
 
 /* 信息卡片样式 - 优化高度和滚动 */
@@ -1203,14 +1203,14 @@ export default {
   align-items: center;
   gap: 10px;
   font-weight: 500;
-  color: #1a2942;
+  color: #a82525;
   position: sticky; /* 使标题粘在顶部 */
   top: 0;
   z-index: 1;
 }
 
 .info-card-header .el-icon {
-  color: #4c75a3;
+  color: #d32f2f;
   font-size: 18px;
 }
 
@@ -1240,8 +1240,8 @@ export default {
 }
 
 .tips-box {
-  background-color: rgba(76, 117, 163, 0.08);
-  border-left: 3px solid #4c75a3;
+  background-color: rgba(211, 47, 47, 0.08);
+  border-left: 3px solid #d32f2f;
   padding: 8px 12px;
   margin: 10px 0;
   border-radius: 0 4px 4px 0;
@@ -1270,9 +1270,9 @@ export default {
 }
 
 .active-tier {
-  border-color: #4c75a3;
-  background-color: rgba(76, 117, 163, 0.05);
-  box-shadow: 0 2px 12px rgba(76, 117, 163, 0.1);
+  border-color: #d32f2f;
+  background-color: rgba(211, 47, 47, 0.05);
+  box-shadow: 0 2px 12px rgba(211, 47, 47, 0.1);
 }
 
 .tier-name {
@@ -1283,7 +1283,7 @@ export default {
 }
 
 .tier-specs {
-  color: #4c75a3;
+  color: #d32f2f;
   font-weight: 500;
   margin-bottom: 3px;
   font-size: 12px;
@@ -1372,7 +1372,7 @@ export default {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: linear-gradient(to bottom, #1a2942, #4c75a3);
+  background: linear-gradient(to bottom, #a82525, #d32f2f);
   color: white;
   display: flex;
   justify-content: center;

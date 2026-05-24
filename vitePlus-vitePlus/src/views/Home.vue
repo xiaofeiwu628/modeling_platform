@@ -206,8 +206,8 @@ onMounted(() => {
 .home-container {
   width: 100%;
   min-height: calc(100vh - 60px);
-  background: linear-gradient(135deg, #1a2942 0%, #2a476e 100%);
-  color: #ffffff;
+  background: #fdfbfb;
+  color: #333333;
   overflow-x: hidden;
 }
 
@@ -218,7 +218,7 @@ onMounted(() => {
   justify-content: space-between;
   padding: 80px 10%;
   min-height: 75vh;
-  background: linear-gradient(135deg, #1a2942 0%, #2a476e 50%, #4c75a3 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #ffebee 100%);
   position: relative;
 }
 
@@ -229,7 +229,7 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 150px;
-  background: linear-gradient(to bottom, transparent, #1a2942);
+  background: linear-gradient(to bottom, transparent, #fdfbfb);
   z-index: 1;
 }
 
@@ -242,7 +242,7 @@ onMounted(() => {
   font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 20px;
-  background: linear-gradient(90deg, #ffffff, #00c0ee);
+  background: linear-gradient(90deg, #d32f2f, #e57373);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -253,7 +253,7 @@ onMounted(() => {
 .hero-description {
   font-size: 1.5rem;
   margin-bottom: 40px;
-  color: #e0e0e0;
+  color: #666666;
   line-height: 1.6;
   animation: fadeInUp 1s ease-out 0.2s forwards;
   opacity: 0;
@@ -267,7 +267,7 @@ onMounted(() => {
 }
 
 .get-started-btn {
-  background: linear-gradient(90deg, #00c0ee, #2a84d8);
+  background: linear-gradient(90deg, #d32f2f, #c62828);
   border: none;
   font-size: 16px;
   padding: 12px 24px;
@@ -280,13 +280,13 @@ onMounted(() => {
 
 .get-started-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 192, 238, 0.3);
+  box-shadow: 0 10px 20px rgba(211, 47, 47, 0.3);
 }
 
 .learn-more-btn {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: #ffffff;
+  color: #d32f2f;
+  border: 1px solid #d32f2f;
   font-size: 16px;
   padding: 12px 24px;
   border-radius: 6px;
@@ -297,7 +297,8 @@ onMounted(() => {
 }
 
 .learn-more-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #ffebee;
+  color: #c62828;
   transform: translateY(-3px);
 }
 
@@ -317,14 +318,16 @@ onMounted(() => {
 }
 
 .platform-illustration {
+  /* Rotate blue to warm/red tone */
   width: 100%;
   max-width: 600px; /* 从500px增加到600px */
-  filter: drop-shadow(0 0 30px rgba(0, 192, 238, 0.5)); /* 增强阴影效果 */
+  filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.15)); /* 增强阴影效果 */
   animation: float 6s ease-in-out infinite;
   transition: all 0.5s ease;
 }
 
 .hero-section:hover .platform-illustration {
+  /* Rotate blue to warm/red tone */
   transform: scale(1.05); /* 鼠标悬停时略微放大 */
 }
 
@@ -344,6 +347,7 @@ onMounted(() => {
 /* 响应式调整 */
 @media (max-width: 1200px) {
   .platform-illustration {
+  /* Rotate blue to warm/red tone */
     max-width: 550px;
   }
 }
@@ -359,7 +363,8 @@ onMounted(() => {
   display: flex;
   justify-content: space-around;
   padding: 60px 10%;
-  background: rgba(26, 41, 66, 0.8);
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   position: relative;
   margin-top: -50px;
   z-index: 10;
@@ -383,27 +388,27 @@ onMounted(() => {
 .stat-number {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #00c0ee;
+  color: #d32f2f;
   margin-bottom: 10px;
 }
 
 .stat-label {
   font-size: 1rem;
-  color: #ffffff;
+  color: #333333;
   opacity: 0.8;
 }
 
 /* 特色功能区域样式 */
 .features-section {
   padding: 100px 10% 80px;
-  background: #1a2942;
+  background: #ffffff;
 }
 
 .section-title {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 60px;
-  color: #ffffff;
+  color: #333333;
   position: relative;
   font-weight: 600;
 }
@@ -416,7 +421,7 @@ onMounted(() => {
   transform: translateX(-50%);
   width: 100px;
   height: 3px;
-  background: linear-gradient(90deg, #00c0ee, #2a84d8);
+  background: linear-gradient(90deg, #d32f2f, #c62828);
 }
 
 .features-grid {
@@ -426,7 +431,8 @@ onMounted(() => {
 }
 
 .feature-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   border-radius: 12px;
   padding: 30px;
   transition: all 0.3s ease;
@@ -438,33 +444,33 @@ onMounted(() => {
 }
 
 .feature-card:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: #ffffff;
   transform: translateY(-10px);
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
 }
 
 .feature-icon {
   font-size: 40px;
-  color: #00c0ee;
+  color: #d32f2f;
   margin-bottom: 20px;
 }
 
 .feature-card h3 {
   font-size: 1.5rem;
   margin-bottom: 15px;
-  color: #ffffff;
+  color: #333333;
   font-weight: 600;
 }
 
 .feature-card p {
-  color: #e0e0e0;
+  color: #666666;
   line-height: 1.6;
 }
 
 /* 快速访问区域样式 */
 .quick-access-section {
   padding: 80px 10%;
-  background: #2a476e;
+  background: #fdfbfb;
 }
 
 .access-cards {
@@ -475,7 +481,8 @@ onMounted(() => {
 }
 
 .access-card {
-  background: rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   border-radius: 12px;
   padding: 25px;
   transition: all 0.3s ease;
@@ -495,19 +502,19 @@ onMounted(() => {
 
 .access-icon {
   font-size: 36px;
-  color: #00c0ee;
+  color: #d32f2f;
   margin-bottom: 15px;
 }
 
 .access-card h3 {
   font-size: 1.2rem;
   margin-bottom: 10px;
-  color: #ffffff;
+  color: #333333;
   font-weight: 600;
 }
 
 .access-card p {
-  color: #e0e0e0;
+  color: #666666;
   font-size: 0.9rem;
 }
 

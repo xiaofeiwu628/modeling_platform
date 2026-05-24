@@ -363,14 +363,14 @@ export default {
             handleSize: '110%',
             handleIcon: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z',
             handleStyle: {
-              color: '#1a2942',
+              color: '#a82525',
               shadowBlur: 3,
               shadowColor: 'rgba(0, 0, 0, 0.3)'
             },
             textStyle: {
               color: '#333'
             },
-            borderColor: '#1a2942'
+            borderColor: '#a82525'
           },
           {
             type: "inside",
@@ -388,7 +388,7 @@ export default {
           dimension: 2,
           show: false,
           inRange: {
-            color: ['#1a2942', '#2a476e', '#4c75a3']
+            color: ['#a82525', '#d32f2f', '#d32f2f']
           }
         },
         series: [{
@@ -506,7 +506,7 @@ export default {
           axisPointer: {
             type: 'line',
             lineStyle: {
-              color: '#4c75a3',
+              color: '#d32f2f',
               width: 1
             }
           },
@@ -520,9 +520,9 @@ export default {
         legend: { 
           data: this.lineLegend,
           type: 'scroll',
-          pageIconColor: '#1a2942',
+          pageIconColor: '#a82525',
           pageTextStyle: {
-            color: '#1a2942'
+            color: '#a82525'
           }
         },
         toolbox: {
@@ -611,14 +611,14 @@ export default {
             handleSize: '110%',
             handleIcon: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z',
             handleStyle: {
-              color: '#1a2942',
+              color: '#a82525',
               shadowBlur: 3,
               shadowColor: 'rgba(0, 0, 0, 0.3)'
             },
             textStyle: {
               color: '#333'
             },
-            borderColor: '#1a2942'
+            borderColor: '#a82525'
           },
           {
             type: "inside",
@@ -631,7 +631,7 @@ export default {
         ],
         series: this.lineSeries,
         color: [
-          '#1a2942', '#4c75a3', '#00c0ee', '#5c7bd9', 
+          '#a82525', '#d32f2f', '#d32f2f', '#5c7bd9', 
           '#9d5abd', '#d3436e', '#f86b0d', '#f2bd27'
         ]
       };
@@ -693,7 +693,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border-radius: 8px;
   color: white;
   margin: 20px;
@@ -751,14 +751,14 @@ export default {
 }
 
 :deep(.el-tabs__item.is-active) {
-  color: #1a2942;
+  color: #a82525;
   font-weight: 600;
 }
 
 :deep(.el-tabs__active-bar) {
   height: 3px;
   border-radius: 3px;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
 }
 
 :deep(.el-tabs__nav-wrap::after) {
@@ -806,7 +806,7 @@ export default {
 
 .control-label {
   font-weight: 500;
-  color: #1a2942;
+  color: #a82525;
   white-space: nowrap;
 }
 
@@ -833,7 +833,7 @@ export default {
 }
 
 .info-item .el-icon {
-  color: #4c75a3;
+  color: #d32f2f;
 }
 
 /* 图表区域 */
@@ -890,7 +890,7 @@ export default {
 :deep(.el-tabs--card > .el-tabs__header .el-tabs__nav) {
   border: none;
   border-radius: 8px;
-  background: linear-gradient(to right, rgba(26, 41, 66, 0.05), rgba(76, 117, 163, 0.05));
+  background: linear-gradient(to right, rgba(168, 37, 37, 0.05), rgba(211, 47, 47, 0.05));
   padding: 5px;
 }
 
@@ -917,14 +917,14 @@ export default {
 }
 
 :deep(.el-tabs--card > .el-tabs__header .el-tabs__item.is-active) {
-  background: linear-gradient(135deg, #1a2942, #4c75a3);
+  background: linear-gradient(135deg, #a82525, #d32f2f);
   color: white;
-  box-shadow: 0 5px 15px rgba(26, 41, 66, 0.3);
+  box-shadow: 0 5px 15px rgba(168, 37, 37, 0.3);
 }
 
 :deep(.el-tabs--card > .el-tabs__header .el-tabs__item:not(.is-active):hover) {
-  color: #1a2942;
-  background: rgba(76, 117, 163, 0.1);
+  color: #a82525;
+  background: rgba(211, 47, 47, 0.1);
 }
 
 /* 为标签添加图标 */
@@ -937,7 +937,7 @@ export default {
 
 :deep(.el-tabs__item[aria-controls*="pane-scatter"])::before {
   content: "\e6df"; /* 使用Element Plus散点图图标 */
-  color: #00c0ee;
+  color: #d32f2f;
 }
 
 :deep(.el-tabs__item[aria-controls*="pane-line"])::before {
@@ -970,7 +970,7 @@ export default {
   left: 0;
   height: 100%;
   width: 4px;
-  background: linear-gradient(to bottom, #1a2942, #4c75a3);
+  background: linear-gradient(to bottom, #a82525, #d32f2f);
   border-radius: 4px 0 0 4px;
 }
 
@@ -985,15 +985,15 @@ export default {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: linear-gradient(to right, rgba(26, 41, 66, 0.02), rgba(76, 117, 163, 0.02));
+  background: linear-gradient(to right, rgba(168, 37, 37, 0.02), rgba(211, 47, 47, 0.02));
   padding: 10px 15px;
   border-radius: 6px;
-  border: 1px solid rgba(76, 117, 163, 0.1);
+  border: 1px solid rgba(211, 47, 47, 0.1);
 }
 
 .control-label {
   font-weight: 500;
-  color: #1a2942;
+  color: #a82525;
   white-space: nowrap;
 }
 
@@ -1006,26 +1006,26 @@ export default {
   display: flex;
   gap: 15px;
   padding-left: 20px;
-  border-left: 1px dashed rgba(76, 117, 163, 0.3);
+  border-left: 1px dashed rgba(211, 47, 47, 0.3);
 }
 
 .info-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(to right, rgba(26, 41, 66, 0.03), rgba(76, 117, 163, 0.03));
+  background: linear-gradient(to right, rgba(168, 37, 37, 0.03), rgba(211, 47, 47, 0.03));
   padding: 8px 12px;
   border-radius: 6px;
-  border: 1px solid rgba(76, 117, 163, 0.1);
+  border: 1px solid rgba(211, 47, 47, 0.1);
 }
 
 .info-item .el-icon {
-  color: #4c75a3;
+  color: #d32f2f;
   font-size: 16px;
 }
 
 .info-item strong {
-  color: #1a2942;
+  color: #a82525;
   font-weight: 600;
 }
 </style>

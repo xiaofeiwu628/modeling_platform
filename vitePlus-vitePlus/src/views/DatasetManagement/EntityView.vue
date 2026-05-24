@@ -314,7 +314,7 @@ const showEntityDetail = async tagName => {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border-radius: 8px;
   color: white;
   margin: 20px;
@@ -397,7 +397,7 @@ const showEntityDetail = async tagName => {
 .table-title {
   font-size: 18px;
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -405,7 +405,7 @@ const showEntityDetail = async tagName => {
 
 .table-title .el-icon {
   font-size: 20px;
-  color: #4c75a3;
+  color: #d32f2f;
 }
 
 .action-buttons {
@@ -414,7 +414,7 @@ const showEntityDetail = async tagName => {
 }
 
 .action-btn {
-  background: linear-gradient(to right, #1a2942, #2a476e);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
   border-radius: 6px;
   transition: all 0.3s;
@@ -426,9 +426,9 @@ const showEntityDetail = async tagName => {
 }
 
 .action-btn:hover {
-  background: linear-gradient(to right, #2a476e, #1a2942);
+  background: linear-gradient(to right, #d32f2f, #a82525);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(26, 41, 66, 0.2);
+  box-shadow: 0 5px 15px rgba(168, 37, 37, 0.2);
 }
 
 .action-btn .el-icon {
@@ -455,7 +455,7 @@ const showEntityDetail = async tagName => {
 
 :deep(.el-table th) {
   background-color: #f2f6fc !important;
-  color: #1a2942;
+  color: #a82525;
   font-weight: 600;
   padding: 12px 0;
 }
@@ -490,7 +490,7 @@ const showEntityDetail = async tagName => {
 /* 计数值样式 */
 .count-value {
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
   font-size: 15px;
 }
 
@@ -501,26 +501,26 @@ const showEntityDetail = async tagName => {
   gap: 4px;
   border-radius: 4px;
   font-size: 13px;
-  background: rgba(76, 117, 163, 0.1);
-  border: 1px solid rgba(76, 117, 163, 0.2);
-  color: #1a2942;
+  background: rgba(211, 47, 47, 0.1);
+  border: 1px solid rgba(211, 47, 47, 0.2);
+  color: #a82525;
   transition: all 0.3s;
 }
 
 .detail-btn:hover {
-  background: rgba(76, 117, 163, 0.2);
-  color: #1a2942;
+  background: rgba(211, 47, 47, 0.2);
+  color: #a82525;
   transform: translateY(-1px);
 }
 
 .detail-btn .el-icon {
   font-size: 15px;
-  color: #4c75a3;
+  color: #d32f2f;
 }
 
 /* 对话框样式 */
 :deep(.custom-dialog .el-dialog__header) {
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   padding: 16px 20px;
   margin-right: 0;
   border-bottom: 1px solid #eaeaea;
@@ -582,7 +582,7 @@ const showEntityDetail = async tagName => {
   background-color: #f8f9fa;
   padding: 15px;
   border-radius: 8px;
-  border-left: 4px solid #4c75a3;
+  border-left: 4px solid #d32f2f;
 }
 
 .summary-item {
@@ -593,12 +593,12 @@ const showEntityDetail = async tagName => {
 }
 
 .summary-item .el-icon {
-  color: #4c75a3;
+  color: #d32f2f;
   font-size: 18px;
 }
 
 .summary-item strong {
-  color: #1a2942;
+  color: #a82525;
   font-weight: 600;
 }
 
@@ -610,18 +610,18 @@ const showEntityDetail = async tagName => {
 }
 
 .entity-name {
-  color: #1a2942;
+  color: #a82525;
   font-weight: 500;
 }
 
 .entity-count {
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
 }
 /* 表格样式优化 */
 :deep(.el-table th) {
   background-color: #f2f6fc !important;
-  color: #1a2942;
+  color: #a82525;
   font-weight: 600;
   padding: 16px 0;
   font-size: 15px;
@@ -646,7 +646,7 @@ const showEntityDetail = async tagName => {
 
 .column-header .el-icon {
   font-size: 18px;
-  color: #1a2942;
+  color: #a82525;
 }
 
 /* 标签内容居中 */
@@ -668,7 +668,7 @@ const showEntityDetail = async tagName => {
 /* 计数值样式 */
 .count-value {
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
   font-size: 16px;
 }
 
@@ -679,7 +679,7 @@ const showEntityDetail = async tagName => {
 }
 
 .entity-name {
-  color: #1a2942;
+  color: #a82525;
   font-weight: 500;
   font-size: 14px;
   text-align: center;
@@ -687,7 +687,7 @@ const showEntityDetail = async tagName => {
 
 .entity-count {
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
   font-size: 15px;
   text-align: center;
 }

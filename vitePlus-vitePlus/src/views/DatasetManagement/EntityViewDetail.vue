@@ -305,7 +305,7 @@ onMounted(async () => {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border-radius: 8px;
   color: white;
   margin: 20px;
@@ -388,7 +388,7 @@ onMounted(async () => {
 .panel-title {
   font-size: 18px;
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -396,7 +396,7 @@ onMounted(async () => {
 
 .panel-title .el-icon {
   font-size: 20px;
-  color: #4c75a3;
+  color: #d32f2f;
 }
 
 /* 表格容器 */
@@ -420,7 +420,7 @@ onMounted(async () => {
 
 :deep(.el-table th) {
   background-color: #f2f6fc !important;
-  color: #1a2942;
+  color: #a82525;
   font-weight: 600;
   padding: 16px 0;
   font-size: 15px;
@@ -456,13 +456,13 @@ onMounted(async () => {
 
 .column-header .el-icon {
   font-size: 18px;
-  color: #1a2942;
+  color: #a82525;
 }
 
 /* 单元格样式 */
 .id-cell {
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
   font-size: 14px;
 }
 
@@ -482,9 +482,9 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  background: rgba(76, 117, 163, 0.1);
-  border: 1px solid rgba(76, 117, 163, 0.2);
-  color: #1a2942;
+  background: rgba(211, 47, 47, 0.1);
+  border: 1px solid rgba(211, 47, 47, 0.2);
+  color: #a82525;
   font-size: 13px;
   padding: 6px 12px;
   border-radius: 4px;
@@ -493,12 +493,12 @@ onMounted(async () => {
 }
 
 .view-labels-btn:hover {
-  background: rgba(76, 117, 163, 0.2);
+  background: rgba(211, 47, 47, 0.2);
   transform: translateY(-1px);
 }
 
 .view-labels-btn .el-icon {
-  color: #4c75a3;
+  color: #d32f2f;
   font-size: 14px;
 }
 
@@ -510,16 +510,16 @@ onMounted(async () => {
 }
 
 :deep(.el-pagination.is-background .el-pager li:not(.is-disabled).is-active) {
-  background-color: #1a2942;
+  background-color: #a82525;
 }
 
 :deep(.el-pagination.is-background .el-pager li:not(.is-disabled):hover) {
-  color: #1a2942;
+  color: #a82525;
 }
 
 /* 对话框样式 */
 :deep(.custom-dialog .el-dialog__header) {
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   padding: 16px 20px;
   margin-right: 0;
   border-bottom: 1px solid #eaeaea;
@@ -581,7 +581,7 @@ onMounted(async () => {
   background-color: #f8f9fa;
   padding: 15px;
   border-radius: 8px;
-  border-left: 4px solid #4c75a3;
+  border-left: 4px solid #d32f2f;
 }
 
 .summary-item {
@@ -592,12 +592,12 @@ onMounted(async () => {
 }
 
 .summary-item .el-icon {
-  color: #4c75a3;
+  color: #d32f2f;
   font-size: 18px;
 }
 
 .summary-item strong {
-  color: #1a2942;
+  color: #a82525;
   font-weight: 600;
 }
 

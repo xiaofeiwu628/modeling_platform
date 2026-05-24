@@ -54,7 +54,7 @@
           stripe 
           class="data-table"
           :cell-style="{ 'text-align': 'center' }"
-          :header-cell-style="{ 'text-align': 'center', background: '#1a2942', color: '#fff', fontWeight: '600' }">
+          :header-cell-style="{ 'text-align': 'center', background: '#a82525', color: '#fff', fontWeight: '600' }">
           <el-table-column 
             prop="fieldName" 
             label="字段名" 
@@ -156,7 +156,7 @@
           border 
           stripe 
           class="detail-table"
-          :header-cell-style="{ background: '#1a2942', color: '#fff' }">
+          :header-cell-style="{ background: '#a82525', color: '#fff' }">
           <el-table-column prop="index" label="序号" width="80" />
           <el-table-column prop="value" label="字段值" />
         </el-table>
@@ -231,7 +231,7 @@
               border 
               stripe 
               class="outlier-table"
-              :header-cell-style="{ background: '#1a2942', color: '#fff' }"
+              :header-cell-style="{ background: '#a82525', color: '#fff' }"
               max-height="360">
               <el-table-column prop="index" label="序号" width="80" />
               <el-table-column prop="id" label="记录id" />
@@ -275,7 +275,7 @@
           border 
           stripe 
           class="analysis-table"
-          :header-cell-style="{ background: '#1a2942', color: '#fff', textAlign: 'center' }"
+          :header-cell-style="{ background: '#a82525', color: '#fff', textAlign: 'center' }"
           :cell-style="{ textAlign: 'center' }">
           <el-table-column prop="unique_values" label="唯一值个数" />
           <el-table-column prop="null_value" label="缺失值个数" />
@@ -681,7 +681,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border-radius: 8px;
   color: white;
   margin: 20px;
@@ -764,7 +764,7 @@ export default {
 .table-title {
   font-size: 18px;
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -772,7 +772,7 @@ export default {
 
 .table-title .el-icon {
   font-size: 20px;
-  color: #4c75a3;
+  color: #d32f2f;
 }
 
 .action-buttons {
@@ -781,7 +781,7 @@ export default {
 }
 
 .action-btn {
-  background: linear-gradient(to right, #1a2942, #2a476e);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
   border-radius: 6px;
   transition: all 0.3s;
@@ -793,9 +793,9 @@ export default {
 }
 
 .action-btn:hover {
-  background: linear-gradient(to right, #2a476e, #1a2942);
+  background: linear-gradient(to right, #d32f2f, #a82525);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(26, 41, 66, 0.2);
+  box-shadow: 0 5px 15px rgba(168, 37, 37, 0.2);
 }
 
 .action-btn .el-icon {
@@ -841,7 +841,7 @@ export default {
 
 .field-name {
   font-weight: 500;
-  color: #1a2942;
+  color: #a82525;
 }
 
 .variable-type-tag {
@@ -875,7 +875,7 @@ export default {
 }
 
 .op-btn:hover {
-  background-color: rgba(76, 117, 163, 0.1);
+  background-color: rgba(211, 47, 47, 0.1);
   transform: translateY(-1px);
 }
 
@@ -901,7 +901,7 @@ export default {
 
 /* 对话框样式 */
 :deep(.custom-dialog .el-dialog__header) {
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   padding: 15px 20px;
   margin-right: 0;
   border-bottom: 1px solid #eaeaea;
@@ -953,7 +953,7 @@ export default {
 }
 
 .info-value {
-  color: #1a2942;
+  color: #a82525;
   font-weight: 600;
 }
 
@@ -976,7 +976,7 @@ export default {
 .visualization-header .field-name {
   font-size: 18px;
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
 }
 
 .segment-control {
@@ -1022,7 +1022,7 @@ export default {
 .outlier-title {
   font-size: 16px;
   margin-bottom: 15px;
-  color: #1a2942;
+  color: #a82525;
   font-weight: 600;
 }
 
@@ -1043,7 +1043,7 @@ export default {
 }
 
 .threshold-btn {
-  background: linear-gradient(to right, #1a2942, #2a476e);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
 }
 
@@ -1073,7 +1073,7 @@ export default {
 .analysis-header .field-name {
   font-size: 16px;
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
 }
 
 .analysis-table {
@@ -1106,7 +1106,7 @@ export default {
 /* 对话框关闭按钮优化 - 改进版 */
 :deep(.custom-dialog .el-dialog__header) {
   position: relative;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   padding: 16px 20px;
   margin-right: 0;
   border-bottom: 1px solid #eaeaea;

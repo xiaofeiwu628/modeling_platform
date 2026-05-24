@@ -406,12 +406,12 @@ export default {
       bestParamTableData: [],
       tableHeaderStyle: {
         background: '#f0f5fa',
-        color: '#1a2942',
+        color: '#a82525',
         fontSize: '14px',
         fontWeight: '600',
         textAlign: 'center',
         padding: '12px 0',
-        borderBottom: '2px solid #4c75a3',
+        borderBottom: '2px solid #d32f2f',
       }
     }
   },
@@ -1021,7 +1021,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  background: linear-gradient(to right, #1a2942, #4c75a3);
+  background: linear-gradient(to right, #a82525, #d32f2f);
   border-radius: 8px;
   color: white;
   margin: 20px;
@@ -1138,12 +1138,12 @@ export default {
 }
 
 :deep(.el-menu--horizontal .el-menu-item.is-active) {
-  border-bottom: 3px solid #4c75a3;
-  color: #4c75a3;
+  border-bottom: 3px solid #d32f2f;
+  color: #d32f2f;
 }
 
 :deep(.el-menu--horizontal .el-menu-item:not(.is-active):hover) {
-  color: #4c75a3;
+  color: #d32f2f;
 }
 
 /* 内容区域通用样式 */
@@ -1170,7 +1170,7 @@ export default {
 
 .log-title {
   font-weight: 500;
-  color: #1a2942;
+  color: #a82525;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1245,7 +1245,7 @@ export default {
 .section-line {
   width: 4px;
   height: 18px;
-  background-color: #4c75a3;
+  background-color: #d32f2f;
   border-radius: 2px;
   margin-right: 10px;
 }
@@ -1253,7 +1253,7 @@ export default {
 .section-title {
   font-size: 16px;
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
 }
 
 .section-content {
@@ -1288,7 +1288,7 @@ export default {
 
 .feature-title {
   font-weight: 600;
-  color: #1a2942;
+  color: #a82525;
   margin-bottom: 10px;
   padding-bottom: 8px;
   border-bottom: 1px dashed #e0e7ee;
@@ -1303,7 +1303,7 @@ export default {
   padding: 10px 15px;
   border-radius: 6px;
   margin-bottom: 15px;
-  color: #4c75a3;
+  color: #d32f2f;
   font-weight: 500;
   display: inline-block;
 }
@@ -1317,12 +1317,12 @@ export default {
   background-color: #f0f5fa;
   border-radius: 6px;
   margin-bottom: 20px;
-  color: #1a2942;
+  color: #a82525;
   font-weight: 500;
 }
 
 .model-name .el-icon {
-  color: #4c75a3;
+  color: #d32f2f;
 }
 
 /* 数据表格 */
@@ -1347,11 +1347,11 @@ export default {
 }
 
 :deep(.el-loading-text) {
-  color: #4c75a3;
+  color: #d32f2f;
 }
 
 :deep(.el-loading-spinner .path) {
-  stroke: #4c75a3;
+  stroke: #d32f2f;
 }
 
 /* 响应式布局 */

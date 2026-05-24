@@ -234,13 +234,13 @@ onMounted(() => {
 
 /* 左侧品牌区域样式 */
 .brand-section {
-  width: 45%;
-  background: linear-gradient(135deg, #1a2942 0%, #2a476e 50%, #4c75a3 100%);
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: white;
+    width: 45%;
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #333333;
   position: relative;
   overflow: hidden;
   box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
@@ -260,14 +260,14 @@ onMounted(() => {
 .platform-logo {
   font-size: 48px;
   margin-right: 15px;
-  color: #00c0ee;
+  color: #d32f2f;
 }
 
 .brand-name {
   font-size: 32px;
   font-weight: 700;
   margin: 0;
-  background: linear-gradient(90deg, #ffffff, #00c0ee);
+  background: linear-gradient(90deg, #d32f2f, #aa2222);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -297,7 +297,7 @@ onMounted(() => {
 
 .feature-icon {
   font-size: 24px;
-  color: #00c0ee;
+  color: #d32f2f;
 }
 
 /* 装饰圆圈 */
@@ -313,7 +313,8 @@ onMounted(() => {
   position: absolute;
   border-radius: 50%;
   opacity: 0.1;
-  background: radial-gradient(circle, #ffffff 0%, rgba(255,255,255,0) 70%);
+  background: radial-gradient(circle, #000000 0%, rgba(0,0,0,0) 70%);
+    opacity: 0.05;
 }
 
 .circle-1 {
@@ -357,7 +358,7 @@ onMounted(() => {
 .form-title {
   font-size: 28px;
   font-weight: 700;
-  color: #1a2942;
+  color: #a82525;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -373,7 +374,7 @@ onMounted(() => {
 }
 
 .input-icon {
-  color: #2a476e;
+  color: #d32f2f;
 }
 
 .captcha-container {
@@ -408,7 +409,7 @@ onMounted(() => {
   padding: 12px;
   font-size: 16px;
   font-weight: 500;
-  background: linear-gradient(90deg, #00c0ee, #2a84d8);
+  background: linear-gradient(90deg, #d32f2f, #c62828);
   border: none;
   margin-bottom: 20px;
   transition: all 0.3s;
@@ -416,7 +417,7 @@ onMounted(() => {
 
 .submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 192, 238, 0.3);
+  box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
 }
 
 .form-footer {
