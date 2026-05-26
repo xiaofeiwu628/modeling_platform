@@ -81,6 +81,11 @@ localStorage.setItem('UserId', userId)
 /dataAnnotation
 ```
 
+> **非常重要：第三方仅需在“首次嵌入访问”或“跨域切换外层菜单”时拼接一次账号密码即可！**
+> 1. **首次登录**：iframe 首次加载带有参数的 URL，建模平台自动完成后台登录，将 Token 存入浏览器的 Local Storage，并自动刷新剔除明文密码。
+> 2. **内部点击**：用户在 iframe 内部点击任何其他菜单、按钮，系统会自动携带已存储的 Token，**完全不需要**第三方再次提供账号密码。
+> 3. **外部菜单切换**：若第三方系统从外部自身菜单强制切换 iframe 的 src (例如从 `/taskView` 切换为 `/dataAnnotation`)，由于同源 Local Storage 共享机制，平台依然保持登录状态。为了稳妥，第三方在切换外层菜单时，可以依然拼接参数（系统会自动校验重登）或者不拼接直接跳入。
+
 > 注意：URL 中携带密码会被浏览器历史、服务器访问日志、代理日志记录。当前方案按第三方平台约定实现，建议仅使用专用低权限账号。
 
 ### 2.2 登录页面路由
@@ -237,7 +242,7 @@ http://服务器IP:9877/modeling/
 | 镜像仓库 | 镜像列表 | `/imageList` | 无 |
 | 在线服务 | 服务列表 | `/onlineServiceList` | 无 |
 | 在线服务 | 服务部署 | `/onlineServiceDeploy` | 可能依赖模型或镜像参数 |
-| 在线服务 | 服务详情 | `/onlineServiceDetails` | 通常依赖服务 ID 等查询参数 |
+| 在线服务 | 服务详情 (含API测试) | `/onlineServiceDetails` | 通常依赖服务 ID 等查询参数 |
 | 在线服务 | 服务日志 | `/onlineServiceLog` | 通常依赖服务 ID 等查询参数 |
 | 在线服务 | 日志可视化 | `/onlineServiceLogVisualization` | 通常依赖服务 ID 等查询参数 |
 | 图谱服务 | 图谱列表 | `/graphList` | 无 |
@@ -350,7 +355,7 @@ location /modeling/ {
 }
 ```
 
-如果 `/api` 也由同一个 Nginx 代理，需要配置到 SpringBoot Gateway：
+如果 `/api` 也由同一个 Nginx 代理，需要配置到 SpringBoot Gateway (默认为 8080 端口)：
 
 ```nginx
 location /modeling/api/ {
@@ -359,7 +364,7 @@ location /modeling/api/ {
 }
 ```
 
-Python 分析服务代理示例：
+Python 数据分析服务代理配置 (默认为 8086 端口)：
 
 ```nginx
 location /modeling/pyanalysis/ {
@@ -368,7 +373,16 @@ location /modeling/pyanalysis/ {
 }
 ```
 
-在线服务 API 测试代理示例：
+自动建模任务调度代理配置 (通常指向网关下的 `/algo`，根据实际情况配置)：
+
+```nginx
+location /modeling/before/ {
+  rewrite ^/modeling/before/(.*)$ /algo/$1 break;
+  proxy_pass http://后端网关IP:8080;
+}
+```
+
+在线服务 API 测试代理配置 (默认为 8002 端口)：
 
 ```nginx
 location /modeling/online-api/ {
@@ -377,7 +391,7 @@ location /modeling/online-api/ {
 }
 ```
 
-前端在线服务详情页的「API测试」功能会优先把匹配 `VITE_ONLINE_SERVICE_TARGET` 的服务地址转换为 `/online-api/...`，通过同源代理发送请求，从而避免浏览器跨域限制。生产环境请保证 `.env.production` 中的 `VITE_ONLINE_SERVICE_TARGET` 与 Nginx `proxy_pass` 目标一致。
+> **说明**：前端在线服务详情页的「API测试」功能会优先把匹配 `VITE_ONLINE_SERVICE_TARGET` 的服务地址转换为 `/online-api/...`，通过同源代理发送请求，从而避免浏览器跨域限制。生产环境请保证 `.env.production` 中的 `VITE_ONLINE_SERVICE_TARGET` 配置项与 Nginx `proxy_pass` 的真实目标地址保持一致。
 
 实际路径以部署目录、Nginx root/alias 配置和后端地址为准。
 
