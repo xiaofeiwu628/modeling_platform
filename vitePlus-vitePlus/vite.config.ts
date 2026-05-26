@@ -22,6 +22,7 @@ export default defineConfig(({ command, mode }) => {
    */
   const rawApiTarget = env.VITE_API_TARGET || 'http://localhost:8080'
   const rawPyTarget = env.VITE_PYANALYSIS_TARGET || 'http://localhost:8086'
+  const onlineServiceTarget = env.VITE_ONLINE_SERVICE_TARGET || 'http://localhost:8002'
 
   // Heuristic auto-fix for legacy docs that pointed API_TARGET to auth-service:8081
   const apiTarget = rawApiTarget.replace(/:8081(\/|$)/, ':8080$1')
@@ -32,6 +33,7 @@ export default defineConfig(({ command, mode }) => {
     // Helps debug “Token required on login/register” issues caused by proxy target misconfiguration
     console.log(`[vite] proxy /api target: ${apiTarget} (raw=${rawApiTarget})`)
     console.log(`[vite] proxy /pyanalysis target: ${pyTarget} (raw=${rawPyTarget})`)
+    console.log(`[vite] proxy /online-api target: ${onlineServiceTarget}`)
   }
 
   return {
@@ -63,6 +65,11 @@ export default defineConfig(({ command, mode }) => {
           target: pyTarget,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/pyanalysis/, '')
+        },
+        '/online-api': {
+          target: onlineServiceTarget,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/online-api/, '')
         },
         '/before': {
           target: 'http://172.18.129.239:8080/algo',

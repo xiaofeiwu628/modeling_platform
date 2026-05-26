@@ -22,7 +22,68 @@ http://服务器IP/modeling/dataAnnotation
 
 第三方平台用户登录时，可由第三方平台后端或前端同步调用建模平台登录接口，使用约定好的专用账号登录。
 
-### 2.1 登录页面路由
+### 2.1 URL 参数自动登录
+
+第三方平台也可以直接在嵌入页面 URL 中携带建模平台专用账号密码。建模平台前端会在页面加载时读取参数，调用本平台登录接口，登录成功后保存用户信息和 Token，然后自动移除 URL 中的账号密码参数。
+
+支持的参数名：
+
+| 参数 | 类型 | 必填 | 说明 |
+|---|---|---|---|
+| `username` / `Username` / `userName` | string | 是 | 建模平台专用账号 |
+| `password` / `Password` | string | 是 | 建模平台专用账号密码 |
+
+示例：
+
+```text
+http://服务器IP/modeling/dataAnnotation?username=embed_user_1&password=your_password
+```
+
+或：
+
+```text
+http://服务器IP:9877/dataAnnotation?username=embed_user_1&password=your_password
+```
+
+iframe 示例：
+
+```html
+<iframe
+  src="http://服务器IP/modeling/dataAnnotation?username=embed_user_1&password=your_password"
+  style="width: 100%; height: 100vh; border: 0;"
+></iframe>
+```
+
+登录成功后，前端会保存：
+
+```js
+localStorage.setItem('Username', username)
+localStorage.setItem('Token', token)
+localStorage.setItem('token', token)
+```
+
+如果后端返回 `user_id`，也会保存：
+
+```js
+localStorage.setItem('user_id', userId)
+localStorage.setItem('UserId', userId)
+```
+
+随后 URL 会从：
+
+```text
+/dataAnnotation?username=embed_user_1&password=your_password
+```
+
+自动清理为：
+
+```text
+/dataAnnotation
+```
+
+> 注意：URL 中携带密码会被浏览器历史、服务器访问日志、代理日志记录。当前方案按第三方平台约定实现，建议仅使用专用低权限账号。
+
+### 2.2 登录页面路由
 
 如果需要人工登录，可访问：
 
@@ -36,7 +97,7 @@ http://服务器IP/modeling/dataAnnotation
 http://服务器IP/modeling/login
 ```
 
-### 2.2 登录接口
+### 2.3 登录接口
 
 前端当前使用的登录接口为：
 
@@ -58,7 +119,7 @@ POST http://服务器IP/modeling/api/auth/UserLogin/Login
 
 实际以部署时的 Nginx `/api` 代理配置为准。
 
-### 2.3 请求参数
+### 2.4 请求参数
 
 当前登录接口使用 query 参数传递账号密码：
 
@@ -73,7 +134,7 @@ POST http://服务器IP/modeling/api/auth/UserLogin/Login
 curl -X POST "http://服务器IP/modeling/api/auth/UserLogin/Login?Username=embed_user_1&Password=your_password"
 ```
 
-### 2.4 返回格式
+### 2.5 返回格式
 
 成功返回示例：
 
@@ -106,7 +167,7 @@ data.Token
 
 中获取建模平台 Token。
 
-### 2.5 Token 使用方式
+### 2.6 Token 使用方式
 
 建模平台前端当前会从浏览器 `localStorage` 中读取 Token：
 
@@ -306,6 +367,17 @@ location /modeling/pyanalysis/ {
   proxy_pass http://Python服务IP:8086;
 }
 ```
+
+在线服务 API 测试代理示例：
+
+```nginx
+location /modeling/online-api/ {
+  rewrite ^/modeling/online-api/(.*)$ /$1 break;
+  proxy_pass http://在线服务网关IP:8002;
+}
+```
+
+前端在线服务详情页的「API测试」功能会优先把匹配 `VITE_ONLINE_SERVICE_TARGET` 的服务地址转换为 `/online-api/...`，通过同源代理发送请求，从而避免浏览器跨域限制。生产环境请保证 `.env.production` 中的 `VITE_ONLINE_SERVICE_TARGET` 与 Nginx `proxy_pass` 目标一致。
 
 实际路径以部署目录、Nginx root/alias 配置和后端地址为准。
 

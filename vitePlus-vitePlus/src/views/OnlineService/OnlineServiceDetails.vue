@@ -221,15 +221,227 @@
           </el-form>
         </div>
       </div>
+
+      <!-- API测试 -->
+      <div class="info-section">
+        <div class="section-header">
+          <div class="section-line"></div>
+          <span class="section-title">API测试</span>
+          <div class="test-status" v-if="testStatus">
+            <el-tag :type="testStatus.type" size="small">{{ testStatus.text }}</el-tag>
+          </div>
+        </div>
+        <div class="section-content">
+          <el-form label-position="left" label-width="120px" :model="testForm" class="test-form">
+            <el-form-item label="请求URL">
+              <el-input v-model="testForm.url" placeholder="请输入请求URL" class="url-input">
+                <template #prepend>
+                  <el-select v-model="testForm.method" style="width: 100px">
+                    <el-option label="POST" value="POST" />
+                    <el-option label="GET" value="GET" />
+                  </el-select>
+                </template>
+              </el-input>
+              <div class="url-note test-note">
+                已配置在线服务代理：匹配 {{ onlineServiceTarget }} 的请求会自动转发到 /online-api，避免浏览器跨域。
+              </div>
+            </el-form-item>
+
+            <el-form-item label="Token">
+              <el-input
+                v-model="testForm.token"
+                placeholder="请输入Token"
+                type="password"
+                show-password
+                class="token-input"
+              />
+            </el-form-item>
+
+            <el-form-item label="请求头">
+              <div class="headers-container">
+                <div
+                  v-for="(header, index) in testForm.headers"
+                  :key="`header-${index}`"
+                  class="header-row"
+                >
+                  <el-input v-model="header.key" placeholder="参数名" class="header-key-input" />
+                  <span class="header-separator">:</span>
+                  <el-input v-model="header.value" placeholder="参数值" class="header-value-input" />
+                  <el-button
+                    type="danger"
+                    :icon="Delete"
+                    circle
+                    size="small"
+                    @click="removeHeader(index)"
+                  />
+                </div>
+                <el-button type="primary" :icon="Plus" size="small" plain @click="addHeader">
+                  添加请求头
+                </el-button>
+              </div>
+            </el-form-item>
+
+            <el-form-item label="请求体">
+              <div class="body-container">
+                <div class="body-type-selector">
+                  <el-radio-group v-model="testForm.bodyType" size="small">
+                    <el-radio-button label="json">JSON</el-radio-button>
+                    <el-radio-button label="form">Form Data</el-radio-button>
+                    <el-radio-button label="raw">Raw</el-radio-button>
+                  </el-radio-group>
+                </div>
+
+                <div v-if="testForm.bodyType === 'json'" class="json-editor">
+                  <el-input
+                    v-model="testForm.jsonBody"
+                    type="textarea"
+                    :rows="8"
+                    placeholder='请输入JSON格式数据，例如：{"data":[{"feature":"value"}]}'
+                    class="code-textarea"
+                  />
+                  <div class="json-actions">
+                    <el-button size="small" :icon="DocumentCopy" @click="formatJson">格式化</el-button>
+                    <el-button size="small" :icon="Check" @click="validateJson">验证JSON</el-button>
+                    <el-button size="small" :icon="Memo" @click="useExampleData">使用示例</el-button>
+                  </div>
+                </div>
+
+                <div v-else-if="testForm.bodyType === 'form'" class="form-data-editor">
+                  <div
+                    v-for="(param, index) in testForm.formData"
+                    :key="`form-${index}`"
+                    class="form-param-row"
+                  >
+                    <el-input v-model="param.key" placeholder="参数名" class="form-param-key" />
+                    <span class="form-separator">=</span>
+                    <el-input v-model="param.value" placeholder="参数值" class="form-param-value" />
+                    <el-button
+                      type="danger"
+                      :icon="Delete"
+                      circle
+                      size="small"
+                      @click="removeFormParam(index)"
+                    />
+                  </div>
+                  <el-button type="primary" :icon="Plus" size="small" plain @click="addFormParam">
+                    添加参数
+                  </el-button>
+                </div>
+
+                <div v-else class="raw-editor">
+                  <el-input
+                    v-model="testForm.rawBody"
+                    type="textarea"
+                    :rows="8"
+                    placeholder="请输入原始请求体"
+                    class="code-textarea"
+                  />
+                </div>
+              </div>
+            </el-form-item>
+
+            <el-form-item>
+              <div class="test-actions">
+                <el-button
+                  type="primary"
+                  :icon="Position"
+                  :loading="testLoading"
+                  size="large"
+                  class="test-btn"
+                  @click="sendTestRequest"
+                >
+                  {{ testLoading ? '发送中...' : '发送请求' }}
+                </el-button>
+                <el-button :icon="Refresh" size="large" @click="clearTestForm">清空</el-button>
+                <el-button :icon="CopyDocument" size="large" @click="copyRequestAsCurl">
+                  复制为cURL
+                </el-button>
+              </div>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+
+      <!-- 测试结果 -->
+      <div class="info-section" v-if="testResult.show">
+        <div class="section-header">
+          <div class="section-line"></div>
+          <span class="section-title">测试结果</span>
+          <div class="result-meta">
+            <el-tag :type="testResult.success ? 'success' : 'danger'" size="small">
+              {{ testResult.success ? '成功' : '失败' }}
+            </el-tag>
+            <span class="response-time" v-if="testResult.responseTime">
+              {{ testResult.responseTime }}ms
+            </span>
+          </div>
+        </div>
+        <div class="section-content">
+          <div class="response-status" v-if="testResult.status">
+            <div class="status-item">
+              <span class="status-label">状态码：</span>
+              <el-tag :type="getStatusType(testResult.status)" size="small">
+                {{ testResult.status }}
+              </el-tag>
+            </div>
+            <div class="status-item" v-if="testResult.statusText">
+              <span class="status-label">状态文本：</span>
+              <span>{{ testResult.statusText }}</span>
+            </div>
+          </div>
+
+          <div class="response-headers">
+            <h4 class="result-section-title">响应头</h4>
+            <div class="headers-display" v-if="Object.keys(testResult.headers || {}).length > 0">
+              <div v-for="(value, key) in testResult.headers" :key="key" class="header-item">
+                <span class="header-key">{{ key }}:</span>
+                <span class="header-value">{{ value }}</span>
+              </div>
+            </div>
+            <div v-else class="headers-display">
+              <span class="empty-result">未获取到响应头信息</span>
+            </div>
+          </div>
+
+          <div class="response-body">
+            <h4 class="result-section-title">响应体</h4>
+            <div class="response-actions">
+              <el-button size="small" :icon="DocumentCopy" @click="formatResponseData">格式化</el-button>
+              <el-button size="small" :icon="CopyDocument" @click="copyResponse">复制</el-button>
+              <el-button size="small" :icon="Download" @click="downloadResponse">下载</el-button>
+            </div>
+            <pre class="response-data">{{ formattedResponse }}</pre>
+          </div>
+
+          <div class="error-info" v-if="testResult.error">
+            <h4 class="result-section-title error-title">错误信息</h4>
+            <pre class="error-data">{{ testResult.error }}</pre>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 
 <script>
+import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { onlineService } from "@/api/task";
-import { ArrowRight, Document, Cpu, Memo } from '@element-plus/icons-vue';
+import {
+  ArrowRight,
+  Check,
+  CopyDocument,
+  Cpu,
+  Delete,
+  Document,
+  DocumentCopy,
+  Download,
+  Memo,
+  Plus,
+  Position,
+  Refresh
+} from '@element-plus/icons-vue';
 import { ElMessage } from "element-plus";
 
 export default {
@@ -258,13 +470,49 @@ export default {
       historyID: '',
       version: '',
       ArrowRight,
+      Check,
+      CopyDocument,
       Document,
+      DocumentCopy,
+      Download,
       Cpu,
+      Delete,
       Memo,
+      Plus,
+      Position,
+      Refresh,
       specificDesc1: {},
       specificDesc2: {},
       serviceId: '',
       formOfResource: {},
+      onlineServiceTarget: import.meta.env.VITE_ONLINE_SERVICE_TARGET || '',
+      testLoading: false,
+      testStatus: null,
+      formattedResponse: '',
+      testForm: {
+        url: '',
+        method: 'POST',
+        token: '',
+        headers: [
+          { key: 'Content-Type', value: 'application/json' }
+        ],
+        bodyType: 'json',
+        jsonBody: '',
+        formData: [
+          { key: '', value: '' }
+        ],
+        rawBody: ''
+      },
+      testResult: {
+        show: false,
+        success: false,
+        status: undefined,
+        statusText: '',
+        headers: {},
+        data: undefined,
+        error: '',
+        responseTime: 0
+      },
       serviceStateDic: {
         running: '运行中',
         stoped: '停止',
@@ -353,10 +601,256 @@ export default {
         this.formOfResource['cpuCoresNum'] = res.data.cpu_cores_num;
         this.formOfRequestDesc.url = res.data.kong_url;
         this.specificDesc1 = JSON.parse(JSON.stringify(res.data.request_data));
+        this.testForm.url = this.normalizeDisplayUrl(res.data.kong_url || '');
+        this.testForm.token = localStorage.getItem("Token") || localStorage.getItem("token") || '';
+        if (res.data.request_data) {
+          this.testForm.jsonBody = JSON.stringify(res.data.request_data, null, 2);
+        }
         console.log(this.specificDesc1, 'specificDesc1')
         console.log(res.data, 'res.data in loadServiceDetails');
         console.log(this.modelInformationTableData, 'modelInformationTableData in loadServiceDetails');
       })
+    },
+    normalizeDisplayUrl(url) {
+      if (!url) return '';
+      const target = this.getOnlineServiceTargetUrl();
+      if (!target) return url;
+      try {
+        const parsed = new URL(url);
+        if (parsed.origin === target.origin) {
+          return `/online-api${parsed.pathname}${parsed.search}`;
+        }
+      } catch (error) {
+        return url;
+      }
+      return url;
+    },
+    getOnlineServiceTargetUrl() {
+      if (!this.onlineServiceTarget) return null;
+      try {
+        return new URL(this.onlineServiceTarget);
+      } catch (error) {
+        return null;
+      }
+    },
+    buildRequestUrl() {
+      const rawUrl = this.testForm.url.replace(/\s+/g, '').trim();
+      if (!rawUrl) return '';
+      const target = this.getOnlineServiceTargetUrl();
+      if (rawUrl.startsWith('/online-api')) return rawUrl;
+      if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
+        const parsed = new URL(rawUrl);
+        if (target && parsed.origin === target.origin) {
+          return `/online-api${parsed.pathname}${parsed.search}`;
+        }
+        return rawUrl;
+      }
+      return `/online-api${rawUrl.startsWith('/') ? rawUrl : `/${rawUrl}`}`;
+    },
+    addHeader() {
+      this.testForm.headers.push({ key: '', value: '' });
+    },
+    removeHeader(index) {
+      this.testForm.headers.splice(index, 1);
+    },
+    addFormParam() {
+      this.testForm.formData.push({ key: '', value: '' });
+    },
+    removeFormParam(index) {
+      this.testForm.formData.splice(index, 1);
+    },
+    formatJson() {
+      try {
+        this.testForm.jsonBody = JSON.stringify(JSON.parse(this.testForm.jsonBody), null, 2);
+        ElMessage.success('JSON格式化成功');
+      } catch (error) {
+        ElMessage.error('JSON格式错误');
+      }
+    },
+    validateJson() {
+      try {
+        JSON.parse(this.testForm.jsonBody);
+        ElMessage.success('JSON格式正确');
+      } catch (error) {
+        ElMessage.error(`JSON格式错误：${error.message}`);
+      }
+    },
+    useExampleData() {
+      if (this.specificDesc1 && Object.keys(this.specificDesc1).length > 0) {
+        this.testForm.jsonBody = JSON.stringify(this.specificDesc1, null, 2);
+        ElMessage.success('已填入请求示例');
+        return;
+      }
+      this.testForm.jsonBody = JSON.stringify({ data: [{ feature1: 'value1', feature2: 'value2' }] }, null, 2);
+      ElMessage.info('已填入默认示例');
+    },
+    clearTestForm() {
+      this.testForm.jsonBody = '';
+      this.testForm.rawBody = '';
+      this.testForm.formData = [{ key: '', value: '' }];
+      this.testForm.headers = [{ key: 'Content-Type', value: 'application/json' }];
+      this.testResult.show = false;
+      this.testStatus = null;
+      ElMessage.info('已清空请求体和结果');
+    },
+    buildAxiosConfig() {
+      const headers = {};
+      if (this.testForm.token) {
+        headers.Token = this.testForm.token;
+      }
+      this.testForm.headers.forEach((header) => {
+        if (header.key && header.value) {
+          headers[header.key] = header.value;
+        }
+      });
+
+      const config = {
+        method: this.testForm.method.toLowerCase(),
+        url: this.buildRequestUrl(),
+        timeout: 30000,
+        headers,
+        validateStatus: () => true,
+      };
+
+      if (this.testForm.method !== 'GET') {
+        if (this.testForm.bodyType === 'json' && this.testForm.jsonBody) {
+          config.data = JSON.parse(this.testForm.jsonBody);
+          config.headers['Content-Type'] = 'application/json';
+        } else if (this.testForm.bodyType === 'form') {
+          const formData = new URLSearchParams();
+          this.testForm.formData.forEach((param) => {
+            if (param.key && param.value) formData.append(param.key, param.value);
+          });
+          config.data = formData;
+          config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        } else if (this.testForm.bodyType === 'raw' && this.testForm.rawBody) {
+          config.data = this.testForm.rawBody;
+        }
+      }
+      return config;
+    },
+    async sendTestRequest() {
+      if (!this.testForm.url.trim()) {
+        ElMessage.error('请输入请求URL');
+        return;
+      }
+      this.testLoading = true;
+      this.testStatus = { type: 'warning', text: '发送中...' };
+      this.testResult.show = false;
+      const startTime = Date.now();
+
+      try {
+        const config = this.buildAxiosConfig();
+        const response = await axios(config);
+        const responseTime = Date.now() - startTime;
+        const headers = {};
+        Object.entries(response.headers || {}).forEach(([key, value]) => {
+          headers[key.toLowerCase()] = String(value);
+        });
+
+        this.testResult = {
+          show: true,
+          success: response.status >= 200 && response.status < 300,
+          status: response.status,
+          statusText: response.statusText,
+          headers,
+          data: response.data,
+          error: response.status >= 200 && response.status < 300 ? '' : `HTTP ${response.status}: ${response.statusText || '请求失败'}`,
+          responseTime,
+        };
+        this.formattedResponse = typeof response.data === 'object'
+          ? JSON.stringify(response.data, null, 2)
+          : String(response.data ?? '');
+        this.testStatus = this.testResult.success
+          ? { type: 'success', text: '请求成功' }
+          : { type: 'danger', text: '请求失败' };
+
+        if (this.testResult.success) {
+          ElMessage.success(`请求成功，耗时 ${responseTime}ms`);
+        } else {
+          ElMessage.error(`请求失败：HTTP ${response.status}`);
+        }
+      } catch (error) {
+        const responseTime = Date.now() - startTime;
+        this.testResult = {
+          show: true,
+          success: false,
+          status: error.response?.status,
+          statusText: error.response?.statusText || '',
+          headers: error.response?.headers || {},
+          data: error.response?.data,
+          error: error.message || '请求失败',
+          responseTime,
+        };
+        this.formattedResponse = error.response?.data
+          ? (typeof error.response.data === 'object' ? JSON.stringify(error.response.data, null, 2) : String(error.response.data))
+          : '请求失败，请检查服务状态或代理配置';
+        this.testStatus = { type: 'danger', text: '请求失败' };
+        ElMessage.error(`请求失败：${this.testResult.error}`);
+      } finally {
+        this.testLoading = false;
+      }
+    },
+    async copyRequestAsCurl() {
+      try {
+        let curlCommand = `curl -X ${this.testForm.method} "${this.buildRequestUrl()}"`;
+        if (this.testForm.token) {
+          curlCommand += ` \\\n  -H "Token: ${this.testForm.token}"`;
+        }
+        this.testForm.headers.forEach((header) => {
+          if (header.key && header.value) {
+            curlCommand += ` \\\n  -H "${header.key}: ${header.value}"`;
+          }
+        });
+        if (this.testForm.method !== 'GET') {
+          if (this.testForm.bodyType === 'json' && this.testForm.jsonBody) {
+            curlCommand += ` \\\n  -d '${this.testForm.jsonBody}'`;
+          } else if (this.testForm.bodyType === 'form') {
+            const formParams = this.testForm.formData
+              .filter((param) => param.key && param.value)
+              .map((param) => `${encodeURIComponent(param.key)}=${encodeURIComponent(param.value)}`)
+              .join('&');
+            if (formParams) curlCommand += ` \\\n  -d "${formParams}"`;
+          } else if (this.testForm.bodyType === 'raw' && this.testForm.rawBody) {
+            curlCommand += ` \\\n  -d '${this.testForm.rawBody}'`;
+          }
+        }
+        await navigator.clipboard.writeText(curlCommand);
+        ElMessage.success('cURL命令已复制');
+      } catch (error) {
+        ElMessage.error('复制失败');
+      }
+    },
+    formatResponseData() {
+      try {
+        this.formattedResponse = JSON.stringify(JSON.parse(this.formattedResponse), null, 2);
+        ElMessage.success('响应体格式化成功');
+      } catch (error) {
+        ElMessage.warning('响应体不是有效JSON');
+      }
+    },
+    async copyResponse() {
+      try {
+        await navigator.clipboard.writeText(this.formattedResponse);
+        ElMessage.success('响应体已复制');
+      } catch (error) {
+        ElMessage.error('复制失败');
+      }
+    },
+    downloadResponse() {
+      const blob = new Blob([this.formattedResponse], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `api-response-${Date.now()}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+    },
+    getStatusType(status) {
+      if (status >= 200 && status < 300) return 'success';
+      if (status >= 300 && status < 400) return 'warning';
+      if (status >= 400) return 'danger';
+      return 'info';
     }
   }
 }
@@ -795,6 +1289,208 @@ export default {
   font-weight: 500;
 }
 
+/* API测试样式 */
+.test-status,
+.result-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.test-form,
+.url-input,
+.token-input,
+.headers-container {
+  width: 100%;
+}
+
+.test-note {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.header-row,
+.form-param-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.header-key-input,
+.form-param-key {
+  flex: 1;
+  min-width: 140px;
+}
+
+.header-value-input,
+.form-param-value {
+  flex: 2;
+}
+
+.header-separator,
+.form-separator {
+  color: #909399;
+  font-weight: 600;
+}
+
+.body-container {
+  width: 100%;
+  border: 1px solid #ebeef5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.body-type-selector {
+  padding: 12px 16px;
+  background-color: #f5f7fa;
+  border-bottom: 1px solid #ebeef5;
+}
+
+.json-editor,
+.form-data-editor,
+.raw-editor {
+  padding: 16px;
+}
+
+.code-textarea :deep(.el-textarea__inner) {
+  background-color: #1f2937;
+  color: #e5e7eb;
+  border: none;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.json-actions,
+.test-actions,
+.response-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.json-actions {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #ebeef5;
+}
+
+.test-btn {
+  background: linear-gradient(to right, #a82525, #d32f2f);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(168, 37, 37, 0.22);
+}
+
+.response-time {
+  color: #909399;
+  font-size: 12px;
+}
+
+.response-status {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-label {
+  color: #606266;
+  font-weight: 600;
+}
+
+.result-section-title {
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f0f2f5;
+  color: #a82525;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.headers-display {
+  max-height: 260px;
+  overflow: auto;
+  padding: 16px;
+  background: #f8fafc;
+  border: 1px solid #ebeef5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.header-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 13px;
+}
+
+.header-item:last-child {
+  margin-bottom: 0;
+}
+
+.header-item .header-key {
+  min-width: 180px;
+  color: #a82525;
+  font-weight: 600;
+}
+
+.header-item .header-value {
+  flex: 1;
+  color: #303133;
+  word-break: break-all;
+}
+
+.empty-result {
+  color: #909399;
+  font-style: italic;
+}
+
+.response-body {
+  margin-bottom: 20px;
+}
+
+.response-data,
+.error-data {
+  max-height: 500px;
+  overflow: auto;
+  padding: 20px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.response-data {
+  background-color: #1f2937;
+  color: #e5e7eb;
+}
+
+.error-title {
+  color: #f56c6c;
+}
+
+.error-data {
+  background: #fef0f0;
+  color: #f56c6c;
+  border: 1px solid #fbc4c4;
+}
+
 /* 响应式调整 */
 @media (max-width: 768px) {
   .header-area {
@@ -838,6 +1534,17 @@ export default {
   .code-example pre {
     padding: 15px;
     font-size: 13px;
+  }
+
+  .header-row,
+  .form-param-row,
+  .response-status {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .header-item {
+    flex-direction: column;
   }
 }
 

@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw, type RouteLocationRaw } from 'vue-router'
 import { getStoredToken } from "@/utils/token";
 import type { Result } from "@/api/types";
-import { checkLogin } from "@/api/auth";
+import { checkLogin, login } from "@/api/auth";
 
 // 使用动态导入替换静态导入
 const Layout = () => import('../layout/Layout.vue')
@@ -84,8 +84,70 @@ const router = createRouter({
   routes
 })
 
+function getQueryStringValue(value: unknown): string {
+  if (Array.isArray(value)) return String(value[0] || "");
+  return value === undefined || value === null ? "" : String(value);
+}
+
+function getEmbedCredentials(to: { query: Record<string, unknown> }) {
+  const query = to.query || {};
+  const username =
+    getQueryStringValue(query.username) ||
+    getQueryStringValue(query.Username) ||
+    getQueryStringValue(query.userName);
+  const password =
+    getQueryStringValue(query.password) ||
+    getQueryStringValue(query.Password);
+  return { username, password };
+}
+
+function buildSanitizedQuery(query: Record<string, unknown>) {
+  const sanitized = { ...query };
+  delete sanitized.username;
+  delete sanitized.Username;
+  delete sanitized.userName;
+  delete sanitized.password;
+  delete sanitized.Password;
+  return sanitized;
+}
+
 // 路由守卫：有 token 时用 CheckLogin 校验；无 token 或校验明确失败则跳登录
 router.beforeEach((to, from, next) => {
+  const embedCredentials = getEmbedCredentials(to);
+  if (embedCredentials.username && embedCredentials.password) {
+    login({
+      Username: embedCredentials.username,
+      Password: embedCredentials.password,
+    }).then((res) => {
+      if (res.code === '0') {
+        localStorage.setItem("Username", res.data.Username || embedCredentials.username);
+        if (res.data.user_id !== undefined && res.data.user_id !== null) {
+          localStorage.setItem("user_id", String(res.data.user_id));
+          localStorage.setItem("UserId", String(res.data.user_id));
+        }
+        next({
+          path: to.path,
+          query: buildSanitizedQuery(to.query as Record<string, unknown>),
+          hash: to.hash,
+          replace: true,
+        } as RouteLocationRaw);
+      } else {
+        next({
+          path: "/login",
+          query: { redirect: to.fullPath },
+          replace: true,
+        });
+      }
+    }).catch(() => {
+      next({
+        path: "/login",
+        query: { redirect: to.fullPath },
+        replace: true,
+      });
+    });
+    return;
+  }
+
   // 开发环境跳过认证：用于无后端服务时预览前端样式
   if (import.meta.env.VITE_SKIP_AUTH === 'true') {
     next();
