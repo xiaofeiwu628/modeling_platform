@@ -32,7 +32,17 @@
             <span>文件与入库配置</span>
           </div>
 
+          <!-- 新增数据源类型选择 -->
+          <div class="source-selector-wrapper">
+            <el-radio-group v-model="sourceType" size="default" class="source-radio-group">
+              <el-radio-button label="local">本地上传</el-radio-button>
+              <el-radio-button label="dataset">数据集选择</el-radio-button>
+            </el-radio-group>
+          </div>
+
+          <!-- 本地上传 -->
           <el-upload
+            v-if="sourceType === 'local'"
             drag
             :auto-upload="false"
             :limit="1"
@@ -47,6 +57,54 @@
               <div class="upload-tip">支持 CSV / JSON，本地解析后再保存到后端</div>
             </template>
           </el-upload>
+
+          <!-- 数据集选择 -->
+          <div v-else class="dataset-source-box">
+            <el-form label-position="top">
+              <el-form-item label="来源数据集">
+                <el-select
+                  v-model="sourceDatasetId"
+                  filterable
+                  placeholder="请选择来源数据集"
+                  class="full-width"
+                >
+                  <el-option
+                    v-for="item in datasetOptions"
+                    :key="item.set_id"
+                    :label="item.set_name"
+                    :value="item.set_id"
+                  />
+                </el-select>
+              </el-form-item>
+              
+              <el-form-item label="来源数据表">
+                <el-select
+                  v-model="sourceTableId"
+                  filterable
+                  placeholder="请选择数据表"
+                  class="full-width"
+                  :disabled="!sourceDatasetId || sourceTableOptions.length === 0"
+                >
+                  <el-option
+                    v-for="table in sourceTableOptions"
+                    :key="table.table_id"
+                    :label="table.table_name"
+                    :value="table.table_id"
+                  />
+                </el-select>
+              </el-form-item>
+
+              <el-button
+                type="primary"
+                class="load-dataset-btn"
+                :loading="loadingDatasetFile"
+                :disabled="!sourceTableId"
+                @click="loadDatasetTableForAnnotation"
+              >
+                加载数据表进行标注
+              </el-button>
+            </el-form>
+          </div>
 
           <el-form label-position="top" class="save-form">
             <el-form-item label="目标数据集">
@@ -150,7 +208,7 @@
             </template>
           </el-alert>
 
-          <el-empty v-if="rows.length === 0" description="请先上传待标注文件" />
+          <el-empty v-if="rows.length === 0" description="请先上传或选择待标注数据" />
 
           <el-table
             v-else
@@ -291,7 +349,7 @@ import {
   Upload,
   UploadFilled,
 } from "@element-plus/icons-vue";
-import { dataset, file } from "@/api/data";
+import { dataset, file, dataDetail } from "@/api/data";
 import type { DataSetInfo } from "@/api/types";
 
 type FileKind = "csv" | "json" | "";
@@ -322,6 +380,27 @@ const saveForm = reactive({
   setId: undefined as number | undefined,
   tableName: "",
   tableDesc: "",
+});
+
+// 数据集加载相关状态
+const sourceType = ref<"local" | "dataset">("local");
+const sourceDatasetId = ref<number | undefined>(undefined);
+const sourceTableId = ref<number | undefined>(undefined);
+const loadingDatasetFile = ref(false);
+
+const sourceTableOptions = computed(() => {
+  const selected = datasetOptions.value.find((item) => item.set_id === sourceDatasetId.value);
+  return selected?.tables || [];
+});
+
+watch(sourceDatasetId, () => {
+  sourceTableId.value = undefined;
+});
+
+watch(sourceType, () => {
+  resetFile();
+  sourceDatasetId.value = undefined;
+  sourceTableId.value = undefined;
 });
 
 const fileKindText = computed(() => {
@@ -375,7 +454,7 @@ onMounted(() => {
 async function loadDatasets() {
   datasetLoading.value = true;
   try {
-    const res = await dataset.getAll();
+    const res = await dataset.getAllDataSetDataTableDataColumns();
     if (res.code === "0") {
       datasetOptions.value = res.data || [];
       if (!saveForm.setId && datasetOptions.value.length > 0) {
@@ -388,6 +467,53 @@ async function loadDatasets() {
     ElMessage.error("数据集加载失败，请检查后端服务");
   } finally {
     datasetLoading.value = false;
+  }
+}
+
+async function loadDatasetTableForAnnotation() {
+  if (!sourceTableId.value) return;
+  loadingDatasetFile.value = true;
+  try {
+    const res = await dataDetail.tableDataDetail(sourceTableId.value, 1, 10000);
+    if (res.code === "0") {
+      const headers = res.data.title || [];
+      csvColumns.value = headers;
+      rows.value = (res.data.data || []).map((item: any, rowIndex: number) => {
+        const values: Record<string, string> = {};
+        headers.forEach((header) => {
+          values[header] = item[header] !== undefined && item[header] !== null ? String(item[header]) : "";
+        });
+        const existingLabel = values.annotation_label || values.label || "";
+        return {
+          index: rowIndex + 1,
+          label: existingLabel,
+          content: Object.values(values).join(" "),
+          values,
+          source: values,
+        };
+      });
+      
+      const selectedTable = sourceTableOptions.value.find((t) => t.table_id === sourceTableId.value);
+      const selectedDataset = datasetOptions.value.find((d) => d.set_id === sourceDatasetId.value);
+      
+      activeFile.value = {
+        name: `${selectedTable?.table_name || '数据表'} (数据集: ${selectedDataset?.set_name || '未知'})`,
+        size: 0,
+      } as any;
+      fileKind.value = "csv";
+      
+      saveForm.setId = sourceDatasetId.value;
+      saveForm.tableName = `${selectedTable?.table_name || '数据表'}_标注结果`;
+      saveForm.tableDesc = `从数据集 [${selectedDataset?.set_name || ''}] 中数据表 [${selectedTable?.table_name || ''}] 加载的标注数据。`;
+      
+      ElMessage.success("数据集数据表加载成功");
+    } else {
+      ElMessage.error(res.msg || "加载数据表失败");
+    }
+  } catch (error) {
+    ElMessage.error("加载数据表出错，请检查网络");
+  } finally {
+    loadingDatasetFile.value = false;
   }
 }
 
@@ -558,7 +684,7 @@ function confirmEdit() {
 
 function validateBeforeSave() {
   if (!activeFile.value || !fileKind.value || rows.value.length === 0) {
-    ElMessage.warning("请先上传并解析文件");
+    ElMessage.warning("请先上传或选择待标注数据");
     return false;
   }
   if (!saveForm.setId) {
@@ -796,6 +922,42 @@ function downloadAnnotatedFile() {
   display: flex;
   gap: 10px;
   width: 100%;
+}
+
+.source-selector-wrapper {
+  margin-top: 18px;
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.source-radio-group {
+  width: 100%;
+  display: flex;
+}
+
+.source-radio-group :deep(.el-radio-button) {
+  flex: 1;
+}
+
+.source-radio-group :deep(.el-radio-button__inner) {
+  width: 100%;
+}
+
+.dataset-source-box {
+  margin-top: 18px;
+  padding: 18px;
+  background-color: #fcfdfe;
+  border: 1px dashed #e5e6eb;
+  border-radius: 4px;
+}
+
+.load-dataset-btn {
+  width: 100%;
+  margin-top: 12px;
+  background: linear-gradient(to right, #a82525, #d32f2f);
+  border: none;
 }
 
 .dataset-select {
