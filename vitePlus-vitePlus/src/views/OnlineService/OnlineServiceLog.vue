@@ -189,6 +189,34 @@ function renderLogs(ele: string) {
   logRenderTimer = null
 }
 
+function getWsUrl(path: string): string {
+  let host = '';
+  const targets = [
+    import.meta.env.VITE_BEFORE_TARGET,
+    import.meta.env.VITE_API_TARGET,
+    import.meta.env.VITE_ONLINE_SERVICE_TARGET
+  ];
+  for (const target of targets) {
+    if (target) {
+      try {
+        const url = new URL(target);
+        if (url.hostname && url.hostname !== 'localhost' && url.hostname !== '127.0.0.1') {
+          host = url.hostname;
+          break;
+        }
+      } catch {
+        // ignore
+      }
+    }
+  }
+  if (!host) {
+    host = window.location.hostname || 'localhost';
+  }
+  const isSecure = window.location.protocol === 'https:';
+  const protocol = isSecure ? 'wss' : 'ws';
+  return `${protocol}://${host}:8090${path}`;
+}
+
 /** 连接日志WebSocket并批量渲染日志 */
 function logConnection(url: string, ele: string) {
   const ansi_up = new AnsiUp()
@@ -210,8 +238,19 @@ function logConnection(url: string, ele: string) {
   ws.onopen = () => {}
   ws.onclose = () => {
     if (logRenderTimer) clearTimeout(logRenderTimer)
+    if (ele === 'serviceMessages') {
+      logLoading.value = false
+    } else {
+      conLogLoading.value = false
+    }
   }
-  ws.onerror = () => {}
+  ws.onerror = () => {
+    if (ele === 'serviceMessages') {
+      logLoading.value = false
+    } else {
+      conLogLoading.value = false
+    }
+  }
 
   ws.onmessage = function (event) {
     if (event.data !== "pass") {
@@ -316,7 +355,7 @@ watch(pageIndex, (newValue) => {
       if (res.data.service_state === 'running') {
         node_id = res.data.extra_conf?.node_id || ''
         c_id = res.data.extra_conf?.container_id || ''
-        let url = `ws://172.18.129.239:8090/container/read_log/${node_id}/${c_id}`
+        let url = getWsUrl(`/container/read_log/${node_id}/${c_id}`)
         if (!wsDict[url]) {
           logConnection(url, 'containerMessage')
         }
@@ -345,7 +384,7 @@ onMounted(() => {
   serviceId.value = String(route.query.serviceId || '')
   serviceName.value = String(route.query.serviceName || '')
   serviceState.value = String(route.query.serviceState || '')
-  logConnection(`ws://172.18.129.239:8090/task/read_log/${serviceId.value}`, 'serviceMessages')
+  logConnection(getWsUrl(`/task/read_log/${serviceId.value}`), 'serviceMessages')
 })
 
 onBeforeUnmount(() => {

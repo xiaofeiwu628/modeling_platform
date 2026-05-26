@@ -740,17 +740,44 @@ export default {
       _this.logLoading = true;
       let mark = 0;
       let messageNumber = 0;
-      const ws = new WebSocket(`ws://172.18.129.239:8090/task/read_log/${this.taskId}`);
+
+      // Dynamically resolve WebSocket hostname from VITE environment variables
+      let host = '';
+      const targets = [
+        import.meta.env.VITE_BEFORE_TARGET,
+        import.meta.env.VITE_API_TARGET,
+        import.meta.env.VITE_ONLINE_SERVICE_TARGET
+      ];
+      for (const target of targets) {
+        if (target) {
+          try {
+            const url = new URL(target);
+            if (url.hostname && url.hostname !== 'localhost' && url.hostname !== '127.0.0.1') {
+              host = url.hostname;
+              break;
+            }
+          } catch (e) {
+            // ignore
+          }
+        }
+      }
+      if (!host) {
+        host = window.location.hostname || 'localhost';
+      }
+      const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+      const wsUrl = `${protocol}://${host}:8090/task/read_log/${this.taskId}`;
+
+      const ws = new WebSocket(wsUrl);
       _this.ws = ws;
       ws.onopen = function () {
-
         console.log('WS open')
       };
       ws.onclose = function () {
         console.log('WS close');
+        _this.logLoading = false;
       };
       ws.onerror = function (event) {
-        // console.log(event.data);
+        _this.logLoading = false;
       };
       ws.onmessage = function (event) {
         if (event.data !== "pass") {
