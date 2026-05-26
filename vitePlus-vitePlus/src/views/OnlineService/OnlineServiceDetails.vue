@@ -24,35 +24,34 @@
           <span class="section-title">基本信息</span>
         </div>
         <div class="section-content">
-          <el-form
-            label-position="left"
-            label-width="120px"
-            :model="formOfBaseInformation"
-            class="info-form"
+          <el-descriptions
+            class="info-descriptions"
+            :column="2"
+            border
           >
-            <el-form-item label="服务名称：">
-              <span>{{ formOfBaseInformation.serviceName }}</span>
-            </el-form-item>
-            <el-form-item label="服务ID：">
-              <span>{{ formOfBaseInformation.serviceId }}</span>
-            </el-form-item>
-            <el-form-item label="服务状态：">
-              <el-tag :type="getServiceStateType" size="small">
-                {{ this.serviceStateDic[formOfBaseInformation.serviceState] }}
+            <el-descriptions-item label="服务名称">
+              <span class="info-value text-bold">{{ formOfBaseInformation.serviceName || '-' }}</span>
+            </el-descriptions-item>
+            <el-descriptions-item label="服务ID">
+              <span class="info-value code-font">{{ formOfBaseInformation.serviceId || '-' }}</span>
+            </el-descriptions-item>
+            <el-descriptions-item label="服务状态">
+              <el-tag :type="getServiceStateType" size="default" class="status-tag">
+                {{ serviceStateDic[formOfBaseInformation.serviceState] || '未知' }}
               </el-tag>
-            </el-form-item>
-            <el-form-item label="创建时间：">
-              <span>{{ formOfBaseInformation.createTime }}</span>
-            </el-form-item>
-            <el-form-item label="部署方式：">
-              <el-tag type="info" size="small">
-                {{ serviceTypeDic[formOfBaseInformation.serviceType] }}
+            </el-descriptions-item>
+            <el-descriptions-item label="部署方式">
+              <el-tag type="info" size="default" class="type-tag">
+                {{ serviceTypeDic[formOfBaseInformation.serviceType] || '-' }}
               </el-tag>
-            </el-form-item>
-            <el-form-item label="服务描述：">
-              <span>{{ formOfBaseInformation.desc }}</span>
-            </el-form-item>
-          </el-form>
+            </el-descriptions-item>
+            <el-descriptions-item label="创建时间" :span="2">
+              <span class="info-value">{{ formOfBaseInformation.createTime || '-' }}</span>
+            </el-descriptions-item>
+            <el-descriptions-item label="服务描述" :span="2">
+              <span class="info-value desc-text">{{ formOfBaseInformation.desc || '暂无描述信息' }}</span>
+            </el-descriptions-item>
+          </el-descriptions>
         </div>
       </div>
       
@@ -260,132 +259,144 @@
           </div>
         </div>
         <div class="section-content">
-          <el-form label-position="left" label-width="120px" :model="testForm" class="test-form">
-            <el-form-item label="请求URL">
-              <el-input v-model="testForm.url" placeholder="请输入请求URL" class="url-input">
-                <template #prepend>
-                  <el-select v-model="testForm.method" style="width: 100px">
-                    <el-option label="POST" value="POST" />
-                    <el-option label="GET" value="GET" />
-                  </el-select>
-                </template>
-              </el-input>
-              <div class="url-note test-note">
-                提示：平台已开启跨域代理。以 <code>/online-api</code> 开头的接口请求将被自动代理转发至目标网关，避免浏览器跨域 (CORS) 限制。
-              </div>
-            </el-form-item>
-
-            <el-form-item label="Token">
-              <el-input
-                v-model="testForm.token"
-                placeholder="请输入Token"
-                type="password"
-                show-password
-                class="token-input"
-              />
-            </el-form-item>
-
-            <el-form-item label="请求头">
-              <div class="headers-container">
-                <div
-                  v-for="(header, index) in testForm.headers"
-                  :key="`header-${index}`"
-                  class="header-row"
-                >
-                  <el-input v-model="header.key" placeholder="参数名" class="header-key-input" />
-                  <span class="header-separator">:</span>
-                  <el-input v-model="header.value" placeholder="参数值" class="header-value-input" />
-                  <el-button
-                    type="danger"
-                    :icon="Delete"
-                    circle
-                    size="small"
-                    @click="removeHeader(index)"
-                  />
-                </div>
-                <el-button type="primary" :icon="Plus" size="small" plain @click="addHeader">
-                  添加请求头
-                </el-button>
-              </div>
-            </el-form-item>
-
-            <el-form-item label="请求体">
-              <div class="body-container">
-                <div class="body-type-selector">
-                  <el-radio-group v-model="testForm.bodyType" size="small">
-                    <el-radio-button label="json">JSON</el-radio-button>
-                    <el-radio-button label="form">Form Data</el-radio-button>
-                    <el-radio-button label="raw">Raw</el-radio-button>
-                  </el-radio-group>
-                </div>
-
-                <div v-if="testForm.bodyType === 'json'" class="json-editor">
+          <el-form label-position="top" :model="testForm" class="test-form">
+            <el-row :gutter="20">
+              <el-col :span="16" :xs="24">
+                <el-form-item label="请求URL" required>
+                  <el-input v-model="testForm.url" placeholder="请输入请求URL" class="url-input">
+                    <template #prepend>
+                      <el-select v-model="testForm.method" style="width: 100px">
+                        <el-option label="POST" value="POST" />
+                        <el-option label="GET" value="GET" />
+                      </el-select>
+                    </template>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8" :xs="24">
+                <el-form-item label="Token">
                   <el-input
-                    v-model="testForm.jsonBody"
-                    type="textarea"
-                    :rows="8"
-                    placeholder='请输入JSON格式数据，例如：{"data":[{"feature":"value"}]}'
-                    class="code-textarea"
+                    v-model="testForm.token"
+                    placeholder="请输入Token"
+                    type="password"
+                    show-password
+                    class="token-input"
                   />
-                  <div class="json-actions">
-                    <el-button size="small" :icon="DocumentCopy" @click="formatJson">格式化</el-button>
-                    <el-button size="small" :icon="Check" @click="validateJson">验证JSON</el-button>
-                    <el-button size="small" :icon="Memo" @click="useExampleData">使用示例</el-button>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <div class="url-note test-note">
+              提示：平台已开启跨域代理。以 <code>/online-api</code> 开头的接口请求将被自动代理转发至目标网关，避免浏览器跨域 (CORS) 限制。
+            </div>
+
+            <!-- 配置 Tabs -->
+            <div class="request-config-tabs">
+              <el-tabs v-model="activeTestTab" type="border-card">
+                <!-- 请求体 Tab -->
+                <el-tab-pane name="body" label="请求体 (Body)">
+                  <div class="body-container-inner">
+                    <div class="body-type-selector">
+                      <el-radio-group v-model="testForm.bodyType" size="small">
+                        <el-radio-button label="json">JSON</el-radio-button>
+                        <el-radio-button label="form">Form Data</el-radio-button>
+                        <el-radio-button label="raw">Raw</el-radio-button>
+                      </el-radio-group>
+                    </div>
+
+                    <div v-if="testForm.bodyType === 'json'" class="json-editor">
+                      <el-input
+                        v-model="testForm.jsonBody"
+                        type="textarea"
+                        :rows="8"
+                        placeholder='请输入JSON格式数据，例如：{"data":[{"feature":"value"}]}'
+                        class="code-textarea"
+                      />
+                      <div class="json-actions">
+                        <el-button size="small" :icon="DocumentCopy" @click="formatJson">格式化</el-button>
+                        <el-button size="small" :icon="Check" @click="validateJson">验证JSON</el-button>
+                        <el-button size="small" :icon="Memo" @click="useExampleData">使用示例</el-button>
+                      </div>
+                    </div>
+
+                    <div v-else-if="testForm.bodyType === 'form'" class="form-data-editor">
+                      <div
+                        v-for="(param, index) in testForm.formData"
+                        :key="`form-${index}`"
+                        class="form-param-row"
+                      >
+                        <el-input v-model="param.key" placeholder="参数名" class="form-param-key" />
+                        <span class="form-separator">=</span>
+                        <el-input v-model="param.value" placeholder="参数值" class="form-param-value" />
+                        <el-button
+                          type="danger"
+                          :icon="Delete"
+                          circle
+                          size="small"
+                          @click="removeFormParam(index)"
+                        />
+                      </div>
+                      <el-button type="primary" :icon="Plus" size="small" plain @click="addFormParam">
+                        添加参数
+                      </el-button>
+                    </div>
+
+                    <div v-else class="raw-editor">
+                      <el-input
+                        v-model="testForm.rawBody"
+                        type="textarea"
+                        :rows="8"
+                        placeholder="请输入原始请求体"
+                        class="code-textarea"
+                      />
+                    </div>
                   </div>
-                </div>
+                </el-tab-pane>
 
-                <div v-else-if="testForm.bodyType === 'form'" class="form-data-editor">
-                  <div
-                    v-for="(param, index) in testForm.formData"
-                    :key="`form-${index}`"
-                    class="form-param-row"
-                  >
-                    <el-input v-model="param.key" placeholder="参数名" class="form-param-key" />
-                    <span class="form-separator">=</span>
-                    <el-input v-model="param.value" placeholder="参数值" class="form-param-value" />
-                    <el-button
-                      type="danger"
-                      :icon="Delete"
-                      circle
-                      size="small"
-                      @click="removeFormParam(index)"
-                    />
+                <!-- 请求头 Tab -->
+                <el-tab-pane name="headers" label="请求头 (Headers)">
+                  <div class="headers-container-inner">
+                    <div
+                      v-for="(header, index) in testForm.headers"
+                      :key="`header-${index}`"
+                      class="header-row"
+                    >
+                      <el-input v-model="header.key" placeholder="参数名" class="header-key-input" />
+                      <span class="header-separator">:</span>
+                      <el-input v-model="header.value" placeholder="参数值" class="header-value-input" />
+                      <el-button
+                        type="danger"
+                        :icon="Delete"
+                        circle
+                        size="small"
+                        @click="removeHeader(index)"
+                      />
+                    </div>
+                    <el-button type="primary" :icon="Plus" size="small" plain @click="addHeader">
+                      添加请求头
+                    </el-button>
                   </div>
-                  <el-button type="primary" :icon="Plus" size="small" plain @click="addFormParam">
-                    添加参数
-                  </el-button>
-                </div>
+                </el-tab-pane>
+              </el-tabs>
+            </div>
 
-                <div v-else class="raw-editor">
-                  <el-input
-                    v-model="testForm.rawBody"
-                    type="textarea"
-                    :rows="8"
-                    placeholder="请输入原始请求体"
-                    class="code-textarea"
-                  />
-                </div>
-              </div>
-            </el-form-item>
-
-            <el-form-item>
-              <div class="test-actions">
-                <el-button
-                  type="primary"
-                  :icon="Position"
-                  :loading="testLoading"
-                  size="large"
-                  class="test-btn"
-                  @click="sendTestRequest"
-                >
-                  {{ testLoading ? '发送中...' : '发送请求' }}
-                </el-button>
-                <el-button :icon="Refresh" size="large" @click="clearTestForm">清空</el-button>
-                <el-button :icon="CopyDocument" size="large" @click="copyRequestAsCurl">
-                  复制为cURL
-                </el-button>
-              </div>
-            </el-form-item>
+            <!-- 操作按钮 -->
+            <div class="test-actions-bar">
+              <el-button
+                type="primary"
+                :icon="Position"
+                :loading="testLoading"
+                size="large"
+                class="test-btn"
+                @click="sendTestRequest"
+              >
+                {{ testLoading ? '发送中...' : '发送请求' }}
+              </el-button>
+              <el-button :icon="Refresh" size="large" @click="clearTestForm">清空</el-button>
+              <el-button :icon="CopyDocument" size="large" @click="copyRequestAsCurl">
+                复制为cURL
+              </el-button>
+            </div>
           </el-form>
         </div>
       </div>
@@ -477,6 +488,7 @@ export default {
   name: "OnlineServiceDetails",
   data() {
     return {
+      activeTestTab: 'body',
       formOfBaseInformation: {},
       modelInformationTableData: [],
       imageInformationTableData: [],
@@ -1050,7 +1062,55 @@ export default {
   padding: 24px 30px;
 }
 
-/* 表单样式 */
+/* 表单与描述列表样式 */
+.info-descriptions {
+  margin: 10px 0;
+}
+
+:deep(.el-descriptions__table) {
+  border-radius: 4px;
+  overflow: hidden;
+  border-collapse: collapse;
+}
+
+:deep(.el-descriptions__label) {
+  background-color: #f8fafc !important;
+  color: #a82525 !important;
+  font-weight: 600 !important;
+  width: 150px;
+  padding: 16px 20px !important;
+}
+
+:deep(.el-descriptions__content) {
+  padding: 16px 20px !important;
+  color: #333333 !important;
+}
+
+.info-value {
+  font-size: 14px;
+}
+
+.info-value.text-bold {
+  font-weight: 600;
+  color: #1d2129;
+}
+
+.info-value.code-font {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-weight: 500;
+  color: #4e5969;
+}
+
+.info-value.desc-text {
+  color: #4e5969;
+  line-height: 1.5;
+}
+
+.status-tag,
+.type-tag {
+  border-radius: 4px;
+}
+
 .info-form {
   max-width: 800px;
 }
@@ -1457,14 +1517,67 @@ export default {
 
 .test-form,
 .url-input,
-.token-input,
-.headers-container {
+.token-input {
+  width: 100%;
+}
+
+/* API测试 Tabs */
+.request-config-tabs {
+  margin-top: 20px;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+:deep(.request-config-tabs .el-tabs--border-card) {
+  border: 1px solid #ebeef5;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+:deep(.request-config-tabs .el-tabs__header) {
+  background-color: #f8fafc;
+  border-bottom: 1px solid #ebeef5;
+}
+
+:deep(.request-config-tabs .el-tabs__item) {
+  color: #606266;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+:deep(.request-config-tabs .el-tabs__item.is-active) {
+  color: #a82525;
+  font-weight: 600;
+  background-color: #ffffff;
+  border-right-color: #ebeef5;
+  border-left-color: #ebeef5;
+}
+
+.body-container-inner,
+.headers-container-inner {
+  padding: 8px 4px;
+}
+
+.body-type-selector {
+  margin-bottom: 16px;
+}
+
+.test-actions-bar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f2f5;
   width: 100%;
 }
 
 .test-note {
-  width: 100%;
   margin-top: 10px;
+  margin-bottom: 16px;
 }
 
 .header-row,
@@ -1490,19 +1603,6 @@ export default {
 .form-separator {
   color: var(--el-color-info);
   font-weight: 600;
-}
-
-.body-container {
-  width: 100%;
-  border: 1px solid #ebeef5;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.body-type-selector {
-  padding: 12px 16px;
-  background-color: #f5f7fa;
-  border-bottom: 1px solid #ebeef5;
 }
 
 .json-editor,
