@@ -166,6 +166,13 @@
             <el-form-item label="请求URL">
               <div class="url-container">
                 <div class="url-value">{{ formOfRequestDesc.url }}</div>
+                <div class="direct-url-val" v-if="formOfRequestDesc.directUrl && formOfRequestDesc.directUrl !== formOfRequestDesc.url">
+                  <span class="url-tag-direct">容器直连 (调试)</span>
+                  <code>{{ formOfRequestDesc.directUrl }}</code>
+                  <el-button type="primary" link size="small" @click="testForm.url = formOfRequestDesc.directUrl" style="margin-left: 10px;">
+                    使用此链接测试
+                  </el-button>
+                </div>
                 <div class="url-note" v-if="formOfBaseInformation.serviceType === 'custom'">
                   注：您可以根据需要在上述URL基础上进行延伸，如：{{ formOfRequestDesc.url }}/example
                 </div>
@@ -529,6 +536,7 @@ export default {
       formOfResource: {},
       onlineServiceTarget: import.meta.env.VITE_ONLINE_SERVICE_TARGET || '',
       testLoading: false,
+      targetHost: '',
       testStatus: null,
       formattedResponse: '',
       testForm: {
@@ -645,11 +653,14 @@ export default {
         } else {
           ElMessage({message: '参数异常！', type: 'error', offset: 60})
         }
+        this.formOfBaseInformation['kongUrl'] = res.data.kong_url;
         this.formOfResource['memory'] = (res.data.memory / 1000000000) + 'GB';
         this.formOfResource['cpuCoresNum'] = res.data.cpu_cores_num;
-        this.formOfRequestDesc.url = this.getUsableRequestUrl(res.data.kong_url || '');
+        const targetUrl = res.data.kong_url || res.data.url || '';
+        this.formOfRequestDesc.url = this.getUsableRequestUrl(targetUrl);
+        this.formOfRequestDesc.directUrl = res.data.url || '';
         this.specificDesc1 = JSON.parse(JSON.stringify(res.data.request_data));
-        this.testForm.url = this.normalizeDisplayUrl(res.data.kong_url || '');
+        this.testForm.url = targetUrl;
         this.testForm.token = localStorage.getItem("Token") || localStorage.getItem("token") || '';
         if (res.data.request_data) {
           this.testForm.jsonBody = JSON.stringify(res.data.request_data, null, 2);
@@ -661,6 +672,9 @@ export default {
     },
     getUsableRequestUrl(url) {
       if (!url) return '';
+      if (!this.formOfBaseInformation.kongUrl) {
+        return url;
+      }
       let targetOrigin = window.location.origin;
       if (this.onlineServiceTarget) {
         try {
@@ -701,18 +715,19 @@ export default {
     buildRequestUrl() {
       const rawUrl = this.testForm.url.replace(/\s+/g, '').trim();
       if (!rawUrl) return '';
-      if (rawUrl.startsWith('/online-api')) return rawUrl;
       
       if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
         try {
           const parsed = new URL(rawUrl);
+          this.targetHost = parsed.host;
           return `/online-api${parsed.pathname}${parsed.search}`;
         } catch (e) {
           // ignore parsing error
         }
-        return rawUrl;
       }
       
+      this.targetHost = '';
+      if (rawUrl.startsWith('/online-api')) return rawUrl;
       return `/online-api${rawUrl.startsWith('/') ? rawUrl : `/${rawUrl}`}`;
     },
     addHeader() {
@@ -771,6 +786,9 @@ export default {
           headers[header.key] = header.value;
         }
       });
+      if (this.targetHost) {
+        headers['X-Target-Host'] = this.targetHost;
+      }
 
       const config = {
         method: this.testForm.method.toLowerCase(),
@@ -1443,6 +1461,26 @@ export default {
 
 .instruction-list li:last-child {
   margin-bottom: 0;
+}
+
+
+.direct-url-val {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #606266;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.url-tag-direct {
+  background-color: #f0fdf4;
+  color: #16a34a;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  margin-right: 6px;
+  border: 1px solid #bbf7d0;
 }
 
 .instruction-list code {
