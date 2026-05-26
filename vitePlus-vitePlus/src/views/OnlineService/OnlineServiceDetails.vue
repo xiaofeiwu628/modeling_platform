@@ -294,7 +294,7 @@
             </el-row>
 
             <div class="url-note test-note">
-              提示：平台已开启跨域代理。以 <code>/online-api</code> 开头的接口请求将被自动代理转发至目标网关，避免浏览器跨域 (CORS) 限制。
+              提示：平台已开启网关代理。以 <code>/online-api</code> 开头的请求将自动代理转发至目标网关。如果您直接输入完整的 <code>http://</code> 容器随机端口地址，请求将直接发送给目标（若出现跨域错误，请检查目标容器配置或后端是否保存了正确的网关地址）。
             </div>
 
             <!-- 配置 Tabs -->
@@ -656,14 +656,48 @@ export default {
         this.formOfBaseInformation['kongUrl'] = res.data.kong_url;
         this.formOfResource['memory'] = (res.data.memory / 1000000000) + 'GB';
         this.formOfResource['cpuCoresNum'] = res.data.cpu_cores_num;
-        const targetUrl = res.data.kong_url || res.data.url || '';
+        this.formOfRequestDesc.directUrl = res.data.direct_url || '';
+        
+        // Auto-construct the proxy URL if backend missed it in the JSON response
+        let proxyUrl = res.data.proxy_url || res.data.url;
+        if (!proxyUrl && res.data.kong_url) {
+          try {
+            const parsedKong = new URL(res.data.kong_url);
+            proxyUrl = `/api/task${parsedKong.pathname}`;
+          } catch (e) {
+            proxyUrl = `/api/task/OnlineService/UserService/${this.serviceId}`;
+          }
+        }
+        
+        const targetUrl = proxyUrl || '';
         this.formOfRequestDesc.url = this.getUsableRequestUrl(targetUrl);
-        this.formOfRequestDesc.directUrl = res.data.url || '';
-        this.specificDesc1 = JSON.parse(JSON.stringify(res.data.request_data));
+        if (res.data.request_data) {
+          this.specificDesc1 = JSON.parse(JSON.stringify(res.data.request_data));
+        } else {
+          // Fallback for specificDesc1 so "请求示例" box is not blank
+          this.specificDesc1 = {
+            "data": [
+              {
+                "您的特征列名1": "填写具体数值",
+                "您的特征列名2": "填写具体数值"
+              }
+            ]
+          };
+        }
         this.testForm.url = targetUrl;
         this.testForm.token = localStorage.getItem("Token") || localStorage.getItem("token") || '';
         if (res.data.request_data) {
           this.testForm.jsonBody = JSON.stringify(res.data.request_data, null, 2);
+        } else {
+          // Fallback if backend failed to return request_data
+          this.testForm.jsonBody = JSON.stringify({
+            "data": [
+              {
+                "您的特征列名1": "填写具体数值",
+                "您的特征列名2": "填写具体数值"
+              }
+            ]
+          }, null, 2);
         }
         console.log(this.specificDesc1, 'specificDesc1')
         console.log(res.data, 'res.data in loadServiceDetails');
@@ -672,7 +706,7 @@ export default {
     },
     getUsableRequestUrl(url) {
       if (!url) return '';
-      if (!this.formOfBaseInformation.kongUrl) {
+      if (url === this.formOfRequestDesc.directUrl) {
         return url;
       }
       let targetOrigin = window.location.origin;
@@ -701,6 +735,7 @@ export default {
         return `/online-api${parsed.pathname}${parsed.search}`;
       } catch (error) {
         if (url.startsWith('/online-api')) return url;
+        if (url.startsWith('/api/')) return url;
         return `/online-api${url.startsWith('/') ? url : `/${url}`}`;
       }
     },
@@ -716,18 +751,15 @@ export default {
       const rawUrl = this.testForm.url.replace(/\s+/g, '').trim();
       if (!rawUrl) return '';
       
+      // Allow direct requests to user-provided URLs (e.g. direct container random port)
       if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
-        try {
-          const parsed = new URL(rawUrl);
-          this.targetHost = parsed.host;
-          return `/online-api${parsed.pathname}${parsed.search}`;
-        } catch (e) {
-          // ignore parsing error
-        }
+        this.targetHost = ''; // No need for target host override if we hit it directly
+        return rawUrl;
       }
       
       this.targetHost = '';
       if (rawUrl.startsWith('/online-api')) return rawUrl;
+      if (rawUrl.startsWith('/api/')) return rawUrl;
       return `/online-api${rawUrl.startsWith('/') ? rawUrl : `/${rawUrl}`}`;
     },
     addHeader() {

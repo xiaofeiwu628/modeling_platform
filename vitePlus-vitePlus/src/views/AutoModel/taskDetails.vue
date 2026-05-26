@@ -741,31 +741,27 @@ export default {
       let mark = 0;
       let messageNumber = 0;
 
-      // Dynamically resolve WebSocket hostname from VITE environment variables
-      let host = '';
-      const targets = [
-        import.meta.env.VITE_BEFORE_TARGET,
-        import.meta.env.VITE_API_TARGET,
-        import.meta.env.VITE_ONLINE_SERVICE_TARGET
-      ];
-      for (const target of targets) {
-        if (target) {
-          try {
-            const url = new URL(target);
-            if (url.hostname && url.hostname !== 'localhost' && url.hostname !== '127.0.0.1') {
-              host = url.hostname;
-              break;
-            }
-          } catch (e) {
-            // ignore
-          }
+      const target = import.meta.env.VITE_BEFORE_TARGET || import.meta.env.VITE_API_TARGET;
+      let wsUrl = '';
+      if (target) {
+        try {
+          const url = new URL(target);
+          const protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
+          let basePath = url.pathname;
+          if (basePath === '/') basePath = '';
+          if (basePath.endsWith('/')) basePath = basePath.slice(0, -1);
+          if (!basePath.includes('/algo')) basePath += '/algo';
+          wsUrl = `${protocol}//${url.host}${basePath}/task/read_log/${this.taskId}`;
+        } catch (e) {
+          // fallback
         }
       }
-      if (!host) {
-        host = window.location.hostname || 'localhost';
+      
+      if (!wsUrl) {
+        const isSecure = window.location.protocol === 'https:';
+        const protocol = isSecure ? 'wss:' : 'ws:';
+        wsUrl = `${protocol}//${window.location.host}/api/algo/task/read_log/${this.taskId}`;
       }
-      const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-      const wsUrl = `${protocol}://${host}:8090/task/read_log/${this.taskId}`;
 
       const ws = new WebSocket(wsUrl);
       _this.ws = ws;

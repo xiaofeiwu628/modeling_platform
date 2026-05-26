@@ -190,31 +190,24 @@ function renderLogs(ele: string) {
 }
 
 function getWsUrl(path: string): string {
-  let host = '';
-  const targets = [
-    import.meta.env.VITE_BEFORE_TARGET,
-    import.meta.env.VITE_API_TARGET,
-    import.meta.env.VITE_ONLINE_SERVICE_TARGET
-  ];
-  for (const target of targets) {
-    if (target) {
-      try {
-        const url = new URL(target);
-        if (url.hostname && url.hostname !== 'localhost' && url.hostname !== '127.0.0.1') {
-          host = url.hostname;
-          break;
-        }
-      } catch {
-        // ignore
-      }
+  const target = import.meta.env.VITE_BEFORE_TARGET || import.meta.env.VITE_API_TARGET;
+  if (target) {
+    try {
+      const url = new URL(target);
+      const protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
+      let basePath = url.pathname;
+      if (basePath === '/') basePath = '';
+      if (basePath.endsWith('/')) basePath = basePath.slice(0, -1);
+      if (!basePath.includes('/algo')) basePath += '/algo';
+      return `${protocol}//${url.host}${basePath}${path}`;
+    } catch (e) {
+      // fallback
     }
   }
-  if (!host) {
-    host = window.location.hostname || 'localhost';
-  }
+
   const isSecure = window.location.protocol === 'https:';
-  const protocol = isSecure ? 'wss' : 'ws';
-  return `${protocol}://${host}:8090${path}`;
+  const protocol = isSecure ? 'wss:' : 'ws:';
+  return `${protocol}://${window.location.host}/api/algo${path}`;
 }
 
 /** 连接日志WebSocket并批量渲染日志 */
