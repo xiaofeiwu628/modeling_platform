@@ -140,10 +140,22 @@
               />
             </el-form-item>
 
-            <el-form-item label="批量标签">
-              <div class="batch-row">
-                <el-input v-model="batchLabel" placeholder="输入标签名" clearable />
-                <el-button type="primary" @click="applyBatchLabel">应用到筛选结果</el-button>
+            <el-form-item label="标注结果列名称">
+              <el-input v-model="saveForm.labelColName" placeholder="默认：annotation_label" />
+            </el-form-item>
+
+            <el-form-item label="批量标注">
+              <div class="batch-wrapper">
+                <div class="batch-row">
+                  <el-input v-model="batchLabel" placeholder="输入标签名" clearable />
+                  <el-button type="primary" @click="applyBatchLabel" :disabled="rows.length === 0">
+                    {{ selectedRows.length > 0 ? `应用到勾选行 (${selectedRows.length})` : '应用到筛选结果' }}
+                  </el-button>
+                </div>
+                <div class="batch-tip" v-if="rows.length > 0">
+                  <span v-if="selectedRows.length > 0">优先应用到选中的 <strong>{{ selectedRows.length }}</strong> 条数据</span>
+                  <span v-else>未勾选数据，将应用到当前筛选出的 <strong>{{ filteredRows.length }}</strong> 条数据</span>
+                </div>
               </div>
             </el-form-item>
           </el-form>
@@ -219,8 +231,12 @@
             :header-cell-style="{ background: '#a82525', color: '#fff', textAlign: 'center' }"
             :cell-style="{ textAlign: 'center' }"
             height="560"
+            row-key="index"
+            ref="multipleTableRef"
+            @selection-change="handleSelectionChange"
           >
-            <el-table-column prop="index" label="序号" width="80" fixed="left" />
+            <el-table-column type="selection" width="50" fixed="left" :reserve-selection="true" />
+            <el-table-column prop="index" label="序号" width="70" fixed="left" />
             <el-table-column label="标注标签" width="220" fixed="left">
               <template #default="{ row }">
                 <el-select
@@ -337,7 +353,7 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, reactive, ref, watch } from "vue";
-import { ElMessage, type UploadFile } from "element-plus";
+import { ElMessage, ElMessageBox, type UploadFile } from "element-plus";
 import {
   Download,
   Edit,
@@ -375,11 +391,18 @@ const currentPage = ref(1);
 const pageSize = ref(20);
 const editVisible = ref(false);
 const editingRow = ref<AnnotationRow | null>(null);
+const selectedRows = ref<AnnotationRow[]>([]);
+const multipleTableRef = ref();
+
+const handleSelectionChange = (val: AnnotationRow[]) => {
+  selectedRows.value = val;
+};
 
 const saveForm = reactive({
   setId: undefined as number | undefined,
   tableName: "",
   tableDesc: "",
+  labelColName: "annotation_label",
 });
 
 // 数据集加载相关状态
@@ -401,6 +424,22 @@ watch(sourceType, () => {
   resetFile();
   sourceDatasetId.value = undefined;
   sourceTableId.value = undefined;
+});
+
+watch(() => saveForm.labelColName, (newVal) => {
+  const col = newVal.trim();
+  if (!col) return;
+  rows.value.forEach((row) => {
+    if (fileKind.value === "csv" && row.values[col] !== undefined) {
+      if (!row.label) {
+        row.label = row.values[col] || "";
+      }
+    } else if (fileKind.value === "json" && isRecord(row.source) && row.source[col] !== undefined) {
+      if (!row.label) {
+        row.label = String(row.source[col] || "");
+      }
+    }
+  });
 });
 
 const fileKindText = computed(() => {
@@ -483,7 +522,8 @@ async function loadDatasetTableForAnnotation() {
         headers.forEach((header) => {
           values[header] = item[header] !== undefined && item[header] !== null ? String(item[header]) : "";
         });
-        const existingLabel = values.annotation_label || values.label || "";
+        const labelCol = saveForm.labelColName.trim() || "annotation_label";
+        const existingLabel = values[labelCol] || values.annotation_label || values.label || "";
         return {
           index: rowIndex + 1,
           label: existingLabel,
@@ -552,6 +592,8 @@ function resetFile() {
   keyword.value = "";
   batchLabel.value = "";
   currentPage.value = 1;
+  selectedRows.value = [];
+  multipleTableRef.value?.clearSelection();
 }
 
 function parseCsvFile(text: string) {
@@ -568,7 +610,8 @@ function parseCsvFile(text: string) {
       headers.forEach((header, colIndex) => {
         values[header] = line[colIndex] ?? "";
       });
-      const existingLabel = values.annotation_label || values.label || "";
+      const labelCol = saveForm.labelColName.trim() || "annotation_label";
+      const existingLabel = values[labelCol] || values.annotation_label || values.label || "";
       return {
         index: rowIndex + 1,
         label: existingLabel,
@@ -582,9 +625,10 @@ function parseCsvFile(text: string) {
 function parseJsonFile(text: string) {
   const parsed = JSON.parse(text) as unknown;
   const items = Array.isArray(parsed) ? parsed : [parsed];
+  const labelCol = saveForm.labelColName.trim() || "annotation_label";
   rows.value = items.map((item, index) => {
     const objectValue = isRecord(item) ? item : { value: item };
-    const label = readStringField(objectValue, ["annotation_label", "label", "tag", "category"]);
+    const label = readStringField(objectValue, [labelCol, "annotation_label", "label", "tag", "category"]);
     const content = readStringField(objectValue, ["text", "content", "sentence", "value", "name"]) ||
       JSON.stringify(item, null, 2);
     return {
@@ -662,10 +706,44 @@ function applyBatchLabel() {
     ElMessage.warning("请输入批量标签");
     return;
   }
-  filteredRows.value.forEach((row) => {
-    row.label = label;
-  });
-  ElMessage.success(`已为 ${filteredRows.value.length} 条数据设置标签`);
+  
+  if (selectedRows.value.length > 0) {
+    ElMessageBox.confirm(
+      `确认要将标签 "${label}" 批量应用到已勾选的 ${selectedRows.value.length} 条数据吗？`,
+      "批量标注确认",
+      {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning",
+      }
+    ).then(() => {
+      selectedRows.value.forEach((row) => {
+        row.label = label;
+      });
+      ElMessage.success(`已为 ${selectedRows.value.length} 条勾选数据设置标签`);
+      multipleTableRef.value?.clearSelection();
+    }).catch(() => {});
+  } else {
+    const count = filteredRows.value.length;
+    if (count === 0) {
+      ElMessage.warning("没有可应用标签的数据项");
+      return;
+    }
+    ElMessageBox.confirm(
+      `当前未勾选任何行，确认要将标签 "${label}" 批量应用到当前筛选出的所有 ${count} 条数据吗？`,
+      "批量标注确认",
+      {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning",
+      }
+    ).then(() => {
+      filteredRows.value.forEach((row) => {
+        row.label = label;
+      });
+      ElMessage.success(`已为 ${count} 条筛选数据设置标签`);
+    }).catch(() => {});
+  }
 }
 
 function clearLabel(row: AnnotationRow) {
@@ -693,6 +771,15 @@ function validateBeforeSave() {
   }
   if (!saveForm.tableName.trim()) {
     ElMessage.warning("请输入保存表名");
+    return false;
+  }
+  const labelCol = saveForm.labelColName.trim();
+  if (!labelCol) {
+    ElMessage.warning("请输入标注结果列名称");
+    return false;
+  }
+  if (/[",\r\n]/.test(labelCol)) {
+    ElMessage.warning("标注结果列名称不能包含英文双引号、逗号或换行符");
     return false;
   }
   return true;
@@ -760,16 +847,36 @@ function buildAnnotatedFileName(ext: string) {
 }
 
 function buildCsvHeaders() {
-  const hasLabelColumn = csvColumns.value.includes("annotation_label");
-  return hasLabelColumn ? csvColumns.value : [...csvColumns.value, "annotation_label"];
+  const labelCol = saveForm.labelColName.trim() || "annotation_label";
+  const headers = [...csvColumns.value];
+  const idx = headers.indexOf(labelCol);
+  if (idx !== -1) {
+    return headers;
+  }
+  
+  const annoLabelIdx = headers.indexOf("annotation_label");
+  if (annoLabelIdx !== -1) {
+    headers[annoLabelIdx] = labelCol;
+    return headers;
+  }
+  
+  const labelIdx = headers.indexOf("label");
+  if (labelIdx !== -1) {
+    headers[labelIdx] = labelCol;
+    return headers;
+  }
+  
+  headers.push(labelCol);
+  return headers;
 }
 
 function buildCsvContent() {
   const headers = buildCsvHeaders();
+  const labelCol = saveForm.labelColName.trim() || "annotation_label";
   const lines = [
     headers.map(escapeCsvCell).join(","),
     ...rows.value.map((row) => headers.map((header) => {
-      if (header === "annotation_label") return escapeCsvCell(row.label);
+      if (header === labelCol) return escapeCsvCell(row.label);
       return escapeCsvCell(row.values[header] ?? "");
     }).join(",")),
   ];
@@ -784,9 +891,12 @@ function escapeCsvCell(value: string) {
 }
 
 function buildJsonContent() {
+  const labelCol = saveForm.labelColName.trim() || "annotation_label";
   return rows.value.map((row) => {
     const source: Record<string, unknown> = isRecord(row.source) ? { ...row.source } : { value: row.source };
-    source.annotation_label = row.label;
+    delete source.annotation_label;
+    delete source.label;
+    source[labelCol] = row.label;
     source.content = row.content;
     return source;
   });
@@ -922,6 +1032,23 @@ function downloadAnnotatedFile() {
   display: flex;
   gap: 10px;
   width: 100%;
+}
+
+.batch-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.batch-tip {
+  font-size: 12px;
+  color: #909399;
+  line-height: 1.4;
+}
+
+.batch-tip strong {
+  color: #a82525;
 }
 
 .source-selector-wrapper {
