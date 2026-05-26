@@ -14,6 +14,11 @@
         <span>数据集管理</span>
       </el-menu-item>
 
+      <el-menu-item index="/dataAnnotation" class="menu-item">
+        <el-icon class="menu-icon"><EditPen /></el-icon>
+        <span>数据标注</span>
+      </el-menu-item>
+
       <el-menu-item index="/graphList" class="menu-item">
         <el-icon class="menu-icon"><Share /></el-icon>
         <span>图谱服务</span>

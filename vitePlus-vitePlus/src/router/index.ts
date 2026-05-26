@@ -17,6 +17,7 @@ const MultiVisualization = () => import('../views/DatasetManagement/MultiVisuali
 const EntityView = () => import('../views/DatasetManagement/EntityView.vue')
 const EntityViewDetail = () => import('../views/DatasetManagement/EntityViewDetail.vue')
 const EntityVisualization = () => import('../views/DatasetManagement/EntityVisualization.vue')
+const DataAnnotation = () => import('../views/DataAnnotation/DataAnnotation.vue')
 
 // 自动建模模块
 const TaskView = () => import("@/views/AutoModel/TaskView.vue")
@@ -56,6 +57,7 @@ const routes: Array<RouteRecordRaw> = [
       { path: '/entityView/detail', name: 'EntityViewDetail', component: EntityViewDetail },
       { path: '/MultiVisualization', name: 'MultiVisualization', component: MultiVisualization },
       { path: '/entityVisualization', name: 'EntityVisualization', component: EntityVisualization },
+      { path: '/dataAnnotation', name: 'DataAnnotation', component: DataAnnotation },
       { path: '/taskView', name: 'TaskView', component: TaskView },
       { path: '/taskCreate', name: 'TaskCreate', component: TaskCreate },
       { path: '/taskDetails', name: 'TaskDetails', component: taskDetails },
