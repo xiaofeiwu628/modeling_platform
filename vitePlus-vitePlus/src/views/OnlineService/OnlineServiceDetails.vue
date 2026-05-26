@@ -168,7 +168,35 @@
               <div class="url-container">
                 <div class="url-value">{{ formOfRequestDesc.url }}</div>
                 <div class="url-note" v-if="formOfBaseInformation.serviceType === 'custom'">
-                  注：您可以根据需要在上述URL基础上进行延申，如：{{ formOfRequestDesc.url }}/example
+                  注：您可以根据需要在上述URL基础上进行延伸，如：{{ formOfRequestDesc.url }}/example
+                </div>
+                <!-- 接口调用说明 -->
+                <div class="url-instruction">
+                  <div class="instruction-title">
+                    <el-icon><InfoFilled /></el-icon>
+                    <span>外部脚本/软件调用说明</span>
+                  </div>
+                  <div class="instruction-content">
+                    <p>若您需要使用 Python、cURL 或 Postman 等外部工具进行批量/自动化请求，请参考以下配置：</p>
+                    <ul class="instruction-list">
+                      <li><strong>接口地址：</strong>可以直接调用上方显示的完整 URL。如果进行私有化部署或在不同服务器网络环境下，请确保该 URL 可达。如有需要，可将域名/IP及端口替换为实际部署的网关地址。</li>
+                      <li><strong>请求方法：</strong><code>POST</code></li>
+                      <li><strong>请求头 (Headers)：</strong>
+                        <div class="mini-table">
+                          <div class="mini-row">
+                            <span class="key">Content-Type</span>
+                            <span class="val">application/json</span>
+                          </div>
+                          <div class="mini-row">
+                            <span class="key">Token</span>
+                            <span class="val">您的身份认证令牌 (如：{{ headerTableData[0]?.value || '获取失败，请先登录' }})</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li><strong>数据格式：</strong>请求体请使用 JSON 格式，参数与下方 “Body请求体” 及 “请求示例” 保持一致。</li>
+                      <li><strong>批量请求建议：</strong>在大批量请求时，建议使用连接池以维持 HTTP 长连接 (Keep-Alive)，并合理配置并发度以获得最佳性能。</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </el-form-item>
@@ -215,7 +243,7 @@
 
             <el-form-item label="请求示例" v-if="formOfBaseInformation.serviceType === 'official'">
               <div class="code-example">
-                <pre>{{ specificDesc1 }}</pre>
+                <pre>{{ formattedRequestExample }}</pre>
               </div>
             </el-form-item>
           </el-form>
@@ -243,7 +271,7 @@
                 </template>
               </el-input>
               <div class="url-note test-note">
-                已配置在线服务代理：匹配 {{ onlineServiceTarget }} 的请求会自动转发到 /online-api，避免浏览器跨域。
+                提示：平台已开启跨域代理。以 <code>/online-api</code> 开头的接口请求将被自动代理转发至目标网关，避免浏览器跨域 (CORS) 限制。
               </div>
             </el-form-item>
 
@@ -437,6 +465,7 @@ import {
   Document,
   DocumentCopy,
   Download,
+  InfoFilled,
   Memo,
   Plus,
   Position,
@@ -477,6 +506,7 @@ export default {
       Download,
       Cpu,
       Delete,
+      InfoFilled,
       Memo,
       Plus,
       Position,
@@ -559,6 +589,12 @@ export default {
         starting: 'warning',
       };
       return stateMap[this.formOfBaseInformation.serviceState] || 'info';
+    },
+    formattedRequestExample() {
+      if (this.specificDesc1 && Object.keys(this.specificDesc1).length > 0) {
+        return JSON.stringify(this.specificDesc1, null, 2);
+      }
+      return '无请求示例数据';
     }
   },
   created() {
@@ -599,7 +635,7 @@ export default {
         }
         this.formOfResource['memory'] = (res.data.memory / 1000000000) + 'GB';
         this.formOfResource['cpuCoresNum'] = res.data.cpu_cores_num;
-        this.formOfRequestDesc.url = res.data.kong_url;
+        this.formOfRequestDesc.url = this.getUsableRequestUrl(res.data.kong_url || '');
         this.specificDesc1 = JSON.parse(JSON.stringify(res.data.request_data));
         this.testForm.url = this.normalizeDisplayUrl(res.data.kong_url || '');
         this.testForm.token = localStorage.getItem("Token") || localStorage.getItem("token") || '';
@@ -611,19 +647,36 @@ export default {
         console.log(this.modelInformationTableData, 'modelInformationTableData in loadServiceDetails');
       })
     },
-    normalizeDisplayUrl(url) {
+    getUsableRequestUrl(url) {
       if (!url) return '';
-      const target = this.getOnlineServiceTargetUrl();
-      if (!target) return url;
+      let targetOrigin = window.location.origin;
+      if (this.onlineServiceTarget) {
+        try {
+          const targetUrl = new URL(this.onlineServiceTarget);
+          targetOrigin = targetUrl.origin;
+        } catch (e) {
+          if (this.onlineServiceTarget.startsWith('http://') || this.onlineServiceTarget.startsWith('https://')) {
+            targetOrigin = this.onlineServiceTarget;
+          }
+        }
+      }
       try {
         const parsed = new URL(url);
-        if (parsed.origin === target.origin) {
-          return `/online-api${parsed.pathname}${parsed.search}`;
-        }
+        return `${targetOrigin}${parsed.pathname}${parsed.search}`;
       } catch (error) {
-        return url;
+        const separator = url.startsWith('/') ? '' : '/';
+        return `${targetOrigin}${separator}${url}`;
       }
-      return url;
+    },
+    normalizeDisplayUrl(url) {
+      if (!url) return '';
+      try {
+        const parsed = new URL(url);
+        return `/online-api${parsed.pathname}${parsed.search}`;
+      } catch (error) {
+        if (url.startsWith('/online-api')) return url;
+        return `/online-api${url.startsWith('/') ? url : `/${url}`}`;
+      }
     },
     getOnlineServiceTargetUrl() {
       if (!this.onlineServiceTarget) return null;
@@ -636,15 +689,18 @@ export default {
     buildRequestUrl() {
       const rawUrl = this.testForm.url.replace(/\s+/g, '').trim();
       if (!rawUrl) return '';
-      const target = this.getOnlineServiceTargetUrl();
       if (rawUrl.startsWith('/online-api')) return rawUrl;
+      
       if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
-        const parsed = new URL(rawUrl);
-        if (target && parsed.origin === target.origin) {
+        try {
+          const parsed = new URL(rawUrl);
           return `/online-api${parsed.pathname}${parsed.search}`;
+        } catch (e) {
+          // ignore parsing error
         }
         return rawUrl;
       }
+      
       return `/online-api${rawUrl.startsWith('/') ? rawUrl : `/${rawUrl}`}`;
     },
     addHeader() {
@@ -1257,6 +1313,7 @@ export default {
 
 .code-example {
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .code-example pre {
@@ -1269,10 +1326,110 @@ export default {
   word-break: break-all;
   font-size: 14px;
   line-height: 1.6;
-  max-height: 400px;
+  max-height: 500px;
+  min-height: 180px;
+  width: 100%;
+  box-sizing: border-box;
   color: #e5e7eb;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative;
+}
+
+/* 接口调用说明样式 */
+.url-instruction {
+  margin-top: 15px;
+  background-color: #fcfdfe;
+  border: 1px solid #eef2f6;
+  border-left: 4px solid #a82525;
+  border-radius: 4px;
+  padding: 18px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.instruction-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #a82525;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.instruction-title .el-icon {
+  font-size: 18px;
+  color: #a82525;
+}
+
+.instruction-content {
+  font-size: 13.5px;
+  color: #4e5969;
+  line-height: 1.6;
+}
+
+.instruction-content p {
+  margin: 0 0 10px 0;
+  color: #1d2129;
+}
+
+.instruction-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.instruction-list li {
+  margin-bottom: 10px;
+}
+
+.instruction-list li:last-child {
+  margin-bottom: 0;
+}
+
+.instruction-list code {
+  background-color: #f1f3f5;
+  color: #d32f2f;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12px;
+}
+
+.mini-table {
+  margin-top: 8px;
+  background-color: #ffffff;
+  border: 1px solid #e5e6eb;
+  border-radius: 4px;
+  max-width: 500px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
+}
+
+.mini-row {
+  display: flex;
+  border-bottom: 1px solid #e5e6eb;
+  font-size: 12.5px;
+}
+
+.mini-row:last-child {
+  border-bottom: none;
+}
+
+.mini-row .key {
+  width: 120px;
+  padding: 8px 12px;
+  background-color: #f7f8fa;
+  font-weight: 600;
+  color: #a82525;
+  border-right: 1px solid #e5e6eb;
+  flex-shrink: 0;
+}
+
+.mini-row .val {
+  flex: 1;
+  padding: 8px 12px;
+  color: #4e5969;
+  word-break: break-all;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .code-example pre::before {
@@ -1534,6 +1691,20 @@ export default {
   .code-example pre {
     padding: 15px;
     font-size: 13px;
+  }
+
+  .url-instruction {
+    padding: 12px;
+  }
+
+  .mini-row {
+    flex-direction: column;
+  }
+
+  .mini-row .key {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e6eb;
   }
 
   .header-row,
