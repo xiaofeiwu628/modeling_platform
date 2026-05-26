@@ -555,7 +555,7 @@ onMounted(() => {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #d32f2f, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -590,7 +590,7 @@ onMounted(() => {
 
 .metric-card {
   background: rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px 20px;
   text-align: center;
   backdrop-filter: blur(10px);
@@ -616,7 +616,7 @@ onMounted(() => {
 .content-panel {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   padding: 20px;
   min-height: calc(100vh - 210px);
@@ -649,7 +649,7 @@ onMounted(() => {
   margin-bottom: 20px;
   padding: 15px 20px;
   background-color: #f9fafc;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
@@ -730,7 +730,7 @@ onMounted(() => {
 }
 
 .table-container {
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   margin-bottom: 25px;
@@ -791,7 +791,7 @@ onMounted(() => {
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: #409EFF;
+  color: var(--el-color-primary);
 }
 
 /* 对话框样式 */
@@ -808,7 +808,7 @@ onMounted(() => {
 
 :deep(.el-tag) {
   padding: 4px 12px;
-  border-radius: 12px;
+  border-radius: 4px;
   font-weight: 500;
 }
 </style>

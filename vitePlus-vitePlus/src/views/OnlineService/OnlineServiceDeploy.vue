@@ -914,7 +914,7 @@ export default {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #a82525, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -959,7 +959,7 @@ export default {
 .main-content-wrapper {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
   padding-bottom: 30px;
   min-height: calc(100vh - 210px);
@@ -969,7 +969,7 @@ export default {
 .config-section {
   margin: 20px 30px 0;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid #ebeef5;
 }
 
@@ -977,7 +977,7 @@ export default {
   padding: 15px 20px;
   border-bottom: 1px solid #ebeef5;
   background-color: #f8f9fa;
-  border-radius: 8px 8px 0 0;
+  border-radius: 4px 4px 0 0;
   display: flex;
   align-items: center;
 }
@@ -1080,7 +1080,7 @@ export default {
 
 .input-help-text {
   font-size: 12px;
-  color: #909399;
+  color: var(--el-color-info);
   margin-top: 5px;
 }
 
@@ -1125,7 +1125,7 @@ export default {
   align-items: center;
   margin-bottom: 12px;
   padding: 12px;
-  border-radius: 6px;
+  border-radius: 4px;
   transition: all 0.3s;
   border: 1px solid #ebeef5;
 }
@@ -1145,7 +1145,7 @@ export default {
 
 .env-arrow-icon {
   margin: 0 15px;
-  color: #909399;
+  color: var(--el-color-info);
   flex-shrink: 0;
 }
 
@@ -1179,7 +1179,7 @@ export default {
 /* 信息卡片样式 - 优化高度和滚动 */
 .info-card {
   background-color: #f8fafc;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
   border: 1px solid #ebeef5;
   margin-bottom: 20px;
@@ -1198,7 +1198,7 @@ export default {
   background-color: #f1f5f9;
   padding: 12px 15px;
   border-bottom: 1px solid #ebeef5;
-  border-radius: 8px 8px 0 0;
+  border-radius: 4px 4px 0 0;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -1258,7 +1258,7 @@ export default {
 
 .resource-tier {
   border: 1px solid #ebeef5;
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 10px;
   background-color: white;
   transition: all 0.3s;
@@ -1290,7 +1290,7 @@ export default {
 }
 
 .tier-desc {
-  color: #909399;
+  color: var(--el-color-info);
   font-size: 11px;
 }
 
@@ -1298,7 +1298,7 @@ export default {
   margin-top: 15px;
   background-color: white;
   border: 1px solid #ebeef5;
-  border-radius: 6px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -1327,7 +1327,7 @@ export default {
 .env-examples {
   margin-top: 10px;
   border: 1px solid #ebeef5;
-  border-radius: 6px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -1346,7 +1346,7 @@ export default {
 .env-example-name {
   font-family: monospace;
   font-weight: 500;
-  color: #409eff;
+  color: var(--el-color-primary);
 }
 
 .env-example-desc {
@@ -1395,7 +1395,7 @@ export default {
   padding: 10px;
   background-color: white;
   border: 1px solid #ebeef5;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 .stat-item {

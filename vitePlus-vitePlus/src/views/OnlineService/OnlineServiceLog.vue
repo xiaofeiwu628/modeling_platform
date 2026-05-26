@@ -370,7 +370,7 @@ onBeforeUnmount(() => {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #a82525, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -415,7 +415,7 @@ onBeforeUnmount(() => {
 .main-content-wrapper {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
   padding: 20px;
   min-height: calc(100vh - 150px);
@@ -428,7 +428,7 @@ onBeforeUnmount(() => {
   gap: 30px;
   padding: 20px;
   background-color: #f8fafc;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
   border: 1px solid #ebeef5;
   margin-bottom: 20px;
@@ -442,7 +442,7 @@ onBeforeUnmount(() => {
 
 .info-label {
   font-size: 13px;
-  color: #909399;
+  color: var(--el-color-info);
 }
 
 .info-value {
@@ -461,7 +461,7 @@ onBeforeUnmount(() => {
 }
 
 .log-menu {
-  border-radius: 8px;
+  border-radius: 4px;
   background-color: #f1f5f9;
   border: 1px solid #ebeef5;
 }
@@ -487,7 +487,7 @@ onBeforeUnmount(() => {
 }
 
 .log-panel {
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
   border: 1px solid #ebeef5;
   overflow: hidden;

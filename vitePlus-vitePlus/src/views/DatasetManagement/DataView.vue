@@ -682,7 +682,7 @@ export default {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #a82525, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -719,7 +719,7 @@ export default {
 
 .metric-card {
   background: rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px 20px;
   text-align: center;
   backdrop-filter: blur(10px);
@@ -746,7 +746,7 @@ export default {
 .content-panel {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   padding: 20px;
 }
@@ -783,7 +783,7 @@ export default {
 .action-btn {
   background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   transition: all 0.3s;
   display: flex;
   align-items: center;
@@ -805,17 +805,17 @@ export default {
 /* 表格区域 */
 .table-container {
   margin-top: 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .data-table {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 :deep(.el-table) {
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
 }
@@ -884,19 +884,19 @@ export default {
 }
 
 .analysis-btn .el-icon {
-  color: #67c23a;
+  color: var(--el-color-success);
 }
 
 .detail-btn .el-icon {
-  color: #409eff;
+  color: var(--el-color-primary);
 }
 
 .visualize-btn .el-icon {
-  color: #e6a23c;
+  color: var(--el-color-warning);
 }
 
 .outlier-btn .el-icon {
-  color: #f56c6c;
+  color: var(--el-color-danger);
 }
 
 /* 对话框样式 */
@@ -948,7 +948,7 @@ export default {
 }
 
 .info-label {
-  color: #909399;
+  color: var(--el-color-info);
   font-weight: 500;
 }
 
@@ -996,7 +996,7 @@ export default {
 .chart-wrapper {
   min-height: 400px;
   border: 1px solid #eaeaea;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px;
   margin-bottom: 20px;
 }
@@ -1059,7 +1059,7 @@ export default {
 .outlier-right {
   width: 58%;
   border: 1px solid #eaeaea;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px;
 }
 

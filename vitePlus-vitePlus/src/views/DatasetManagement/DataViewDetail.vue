@@ -193,7 +193,7 @@ export default {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #a82525, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -222,7 +222,7 @@ export default {
 .content-panel {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   padding: 20px;
 }
@@ -234,7 +234,7 @@ export default {
   padding: 15px 20px;
   margin-bottom: 20px;
   background: #f8f9fa;
-  border-radius: 8px;
+  border-radius: 4px;
   border-left: 4px solid #d32f2f;
 }
 
@@ -273,7 +273,7 @@ export default {
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: 4px;
   transition: all 0.3s;
 }
 
@@ -285,7 +285,7 @@ export default {
 /* 表格区域 */
 .table-container {
   margin-bottom: 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 

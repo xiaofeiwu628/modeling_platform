@@ -28,7 +28,7 @@
           </div>
           <div class="form-section">
             <div class="form-row">
-              <span class="span-d"><span style="color: #f56c6c; font-weight: bold;">*</span> 任务名称：</span>
+              <span class="span-d"><span style="color: var(--el-color-danger); font-weight: bold;">*</span> 任务名称：</span>
               <div style="display: inline-block">
                 <el-input v-model="taskName" placeholder="限制50个字符以内" maxlength="50" type="text" class="input" />
                 <br />
@@ -3056,8 +3056,8 @@ export default {
 
 .remove-button {
   background-color: #fff1f0;
-  color: #f56c6c;
-  border-color: #f56c6c;
+  color: var(--el-color-danger);
+  border-color: var(--el-color-danger);
   font-size: 18px;
   vertical-align: middle;
   margin-left: 10px;
@@ -3065,7 +3065,7 @@ export default {
 }
 
 .remove-button:hover {
-  background-color: #f56c6c;
+  background-color: var(--el-color-danger);
   color: white;
   transform: scale(1.05);
 }
@@ -3093,7 +3093,7 @@ div {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #a82525, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -3103,7 +3103,7 @@ div {
   margin: 20px 0;
   padding: 15px;
   background-color: #f8fafc;
-  border-radius: 6px;
+  border-radius: 4px;
   border-left: 4px solid #d32f2f;
   display: flex;
   align-items: center;
@@ -3128,13 +3128,13 @@ div {
 
 /* 当搜索次数较大时的警告样式 */
 .grid-search-value.warning {
-  color: #e6a23c;
+  color: var(--el-color-warning);
   background-color: rgba(230, 162, 60, 0.1);
 }
 
 /* 当搜索次数过大时的警告样式 */
 .grid-search-value.danger {
-  color: #f56c6c;
+  color: var(--el-color-danger);
   background-color: rgba(245, 108, 108, 0.1);
 }
 /* 面包屑导航样式 */
@@ -3160,7 +3160,7 @@ div {
 .main-content-wrapper {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
   padding: 30px;
   min-height: calc(100vh - 150px);
@@ -3214,7 +3214,7 @@ div {
 
 .form-section {
   background-color: #f8fafc;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 25px;
   margin-bottom: 30px;
   border: 1px solid #ebeef5;
@@ -3350,7 +3350,7 @@ div {
 /* 卡片样式 */
 .card {
   background-color: white;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 20px;
   margin-bottom: 20px;
   border: 1px solid #ebeef5;
@@ -3500,7 +3500,7 @@ div {
 
 /* 错误提示 */
 .error-text {
-  color: #f56c6c;
+  color: var(--el-color-danger);
   font-size: 14px;
   margin-top: 10px;
   margin-left: 20px;
@@ -3508,7 +3508,7 @@ div {
 
 /* 信息提示 */
 .info-text {
-  color: #909399;
+  color: var(--el-color-info);
   font-size: 13px;
   margin-top: 5px;
   margin-left: 20px;
@@ -3517,7 +3517,7 @@ div {
 /* 嵌套表格配置区域 */
 .parameter-section {
   background-color: #f8fafc;
-  border-radius: 8px;
+  border-radius: 4px;
   margin-bottom: 20px;
   overflow: hidden;
 }
@@ -3536,7 +3536,7 @@ div {
 
 /* 弹窗样式 */
 :deep(.el-dialog) {
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }

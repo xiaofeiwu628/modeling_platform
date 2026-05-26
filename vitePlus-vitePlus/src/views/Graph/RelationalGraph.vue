@@ -786,7 +786,7 @@ onUnmounted(() => {
       font-size: 20px;
       font-style: italic;
       font-weight: bold;
-      color: #409eff;
+      color: var(--el-color-primary);
     }
   }
 
@@ -796,7 +796,7 @@ onUnmounted(() => {
     font-style: italic;
     font-weight: bold;
     line-height: 1.5;
-    color: #409eff;
+    color: var(--el-color-primary);
   }
 
   :deep(.el-input-group__prepend) {
@@ -904,7 +904,7 @@ onUnmounted(() => {
   font-size: 19px;
   font-weight: bold;
   line-height: 1.5;
-  color: #409eff;
+  color: var(--el-color-primary);
   content: '返回';
 }
 

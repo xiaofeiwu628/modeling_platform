@@ -273,7 +273,7 @@ const setWordCloud = async params => {
     let tagBarOption = tagBarchart.getOption();
     let tagDedupeBarOption = tagDedupeBarchart.getOption();
     
-    const highlightColor = "#e6a23c"; // 橙色高亮
+    const highlightColor = "var(--el-color-warning)"; // 橙色高亮
     const defaultColor1 = "#a82525"; // 主题蓝色
     const defaultColor2 = "#d32f2f"; // 浅蓝色
     
@@ -363,7 +363,7 @@ const setWordCloud = async params => {
           fontWeight: 'bolder', // 加粗显示
           textShadowBlur: 8,    // 增加阴影清晰度
           textShadowColor: "rgba(0, 0, 0, 0.5)", // 更强的阴影
-          color: '#e6a23c' // 悬停时变为醒目的橙色
+          color: 'var(--el-color-warning)' // 悬停时变为醒目的橙色
         },
       },
       data: entityData.slice(0, 70).map(item => {
@@ -723,7 +723,7 @@ onUnmounted(() => {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #a82525, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -764,7 +764,7 @@ onUnmounted(() => {
   gap: 8px;
   padding: 8px 15px;
   background: rgba(255, 255, 255, 0.18);
-  border-radius: 6px;
+  border-radius: 4px;
   backdrop-filter: blur(10px);
   transition: all 0.3s;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
@@ -795,7 +795,7 @@ onUnmounted(() => {
 .content-panel {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   padding: 20px;
   min-height: calc(100vh - 160px);
@@ -828,7 +828,7 @@ onUnmounted(() => {
 /* 图表卡片 */
 .chart-card {
   background-color: #f8f9fa;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   padding: 15px;
   height: calc(50% - 10px);
@@ -887,7 +887,7 @@ onUnmounted(() => {
 /* 加载样式优化 */
 :deep(.el-loading-mask) {
   background-color: rgba(255, 255, 255, 0.85);
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 :deep(.el-loading-spinner .el-loading-text) {

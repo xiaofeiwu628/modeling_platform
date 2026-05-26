@@ -588,14 +588,14 @@ function initChart(): void {
               
               // 根据状态码返回不同颜色
               if (statusCode.startsWith('2')) {  // 2xx 成功状态
-                return '#67c23a'  // 绿色
+                return 'var(--el-color-success)'  // 绿色
               } else if (statusCode.startsWith('3')) {  // 3xx 重定向
-                return '#909399'  // 灰色
+                return 'var(--el-color-info)'  // 灰色
               } else if (statusCode.startsWith('4')) {  // 4xx 客户端错误
                 if (statusCode === '404') {
-                  return '#e6a23c'  // 404 用橙色
+                  return 'var(--el-color-warning)'  // 404 用橙色
                 }
-                return '#f56c6c'  // 其他客户端错误用红色
+                return 'var(--el-color-danger)'  // 其他客户端错误用红色
               } else if (statusCode.startsWith('5')) {  // 5xx 服务器错误
                 return '#d81e06'  // 深红色
               }
@@ -740,7 +740,7 @@ onMounted(() => {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #a82525, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -785,7 +785,7 @@ onMounted(() => {
 .main-content-wrapper {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
   padding: 20px;
   min-height: calc(100vh - 150px);
@@ -797,7 +797,7 @@ onMounted(() => {
 }
 
 .stats-menu {
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   border: 1px solid #ebeef5;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
@@ -830,7 +830,7 @@ onMounted(() => {
 }
 
 .chart-container {
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
   border: 1px solid #ebeef5;
   padding: 20px;
@@ -1002,7 +1002,7 @@ onMounted(() => {
 .status-table {
   flex: 1;
   min-width: 300px;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
@@ -1112,31 +1112,31 @@ onMounted(() => {
 
 .status-success {
   background-color: #f0f9eb;
-  color: #67c23a;
+  color: var(--el-color-success);
   border: 1px solid #e1f3d8;
 }
 
 .status-redirect {
   background-color: #f4f4f5;
-  color: #909399;
+  color: var(--el-color-info);
   border: 1px solid #e9e9eb;
 }
 
 .status-client-error {
   background-color: #fef0f0;
-  color: #f56c6c;
+  color: var(--el-color-danger);
   border: 1px solid #fde2e2;
 }
 
 .status-server-error {
   background-color: #fef6ed;
-  color: #e6a23c;
+  color: var(--el-color-warning);
   border: 1px solid #faecd8;
 }
 
 .status-unknown {
   background-color: #f4f4f5;
-  color: #909399;
+  color: var(--el-color-info);
   border: 1px solid #e9e9eb;
 }
 
@@ -1161,7 +1161,7 @@ onMounted(() => {
   flex: 1;
   min-width: 300px;
   height: 400px;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid #dcdfe6;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;

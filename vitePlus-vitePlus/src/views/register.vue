@@ -390,7 +390,7 @@ onMounted(() => {// 页面加载时生成验证码
   width: 450px;
   padding: 40px;
   background: white;
-  border-radius: 12px;
+  border-radius: 4px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
@@ -507,7 +507,7 @@ onMounted(() => {// 页面加载时生成验证码
 }
 
 :deep(.el-form-item__error) {
-  color: #f56c6c;
+  color: var(--el-color-danger);
   font-size: 12px;
   margin-top: 4px;
 }
@@ -517,7 +517,7 @@ onMounted(() => {// 页面加载时生成验证码
 }
 
 :deep(.el-button) {
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 :deep(.el-link) {

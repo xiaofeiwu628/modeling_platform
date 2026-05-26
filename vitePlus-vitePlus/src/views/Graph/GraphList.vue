@@ -543,7 +543,7 @@ onMounted(() => load())
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #d32f2f, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -578,7 +578,7 @@ onMounted(() => load())
 /* 统计卡片：与数据集管理「数据集总数」一致，半透明白底、白字 */
 .metric-card {
   background: rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px 20px;
   text-align: center;
   backdrop-filter: blur(10px);
@@ -605,7 +605,7 @@ onMounted(() => load())
 .content-panel {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   padding: 20px;
   min-height: calc(100vh - 210px);
@@ -618,7 +618,7 @@ onMounted(() => load())
   justify-content: space-between;
   align-items: center;
   background: linear-gradient(to right, #f6f8fa, #e9ecef);
-  border-radius: 8px;
+  border-radius: 4px;
   margin-bottom: 25px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
 }
@@ -631,7 +631,7 @@ onMounted(() => load())
 
 .tech-input {
   width: 360px;
-  border-radius: 6px;
+  border-radius: 4px;
   transition: all 0.3s;
 }
 
@@ -644,7 +644,7 @@ onMounted(() => load())
 .search-btn {
   background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   transition: all 0.3s;
 }
 
@@ -657,7 +657,7 @@ onMounted(() => load())
 
 .table-container {
   margin: 0;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -719,7 +719,7 @@ onMounted(() => load())
 }
 .preview-table-wrap {
   border: 1px solid #dcdfe6;
-  border-radius: 6px;
+  border-radius: 4px;
   overflow: hidden;
   max-height: 240px;
   overflow-y: auto;

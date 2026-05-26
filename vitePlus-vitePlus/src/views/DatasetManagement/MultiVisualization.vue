@@ -694,7 +694,7 @@ export default {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #a82525, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -723,7 +723,7 @@ export default {
 .content-panel {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   padding: 20px;
   min-height: calc(100vh - 160px);
@@ -781,7 +781,7 @@ export default {
   align-items: center;
   padding: 15px;
   background: #f8f9fa;
-  border-radius: 8px;
+  border-radius: 4px;
   margin-bottom: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
@@ -840,7 +840,7 @@ export default {
 .chart-area {
   flex: 1;
   height: 60vh;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid #f0f0f0;
   overflow: hidden;
 }
@@ -889,7 +889,7 @@ export default {
 
 :deep(.el-tabs--card > .el-tabs__header .el-tabs__nav) {
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   background: linear-gradient(to right, rgba(168, 37, 37, 0.05), rgba(211, 47, 47, 0.05));
   padding: 5px;
 }
@@ -898,7 +898,7 @@ export default {
   border: none;
   height: 56px;
   margin: 0 5px;
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 0 25px;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   position: relative;
@@ -956,7 +956,7 @@ export default {
   align-items: center;
   padding: 20px;
   background: white;
-  border-radius: 8px;
+  border-radius: 4px;
   margin-bottom: 20px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   border: 1px solid #ebeef5;
@@ -987,7 +987,7 @@ export default {
   gap: 12px;
   background: linear-gradient(to right, rgba(168, 37, 37, 0.02), rgba(211, 47, 47, 0.02));
   padding: 10px 15px;
-  border-radius: 6px;
+  border-radius: 4px;
   border: 1px solid rgba(211, 47, 47, 0.1);
 }
 
@@ -1015,7 +1015,7 @@ export default {
   gap: 8px;
   background: linear-gradient(to right, rgba(168, 37, 37, 0.03), rgba(211, 47, 47, 0.03));
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: 4px;
   border: 1px solid rgba(211, 47, 47, 0.1);
 }
 

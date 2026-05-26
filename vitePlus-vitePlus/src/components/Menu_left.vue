@@ -164,7 +164,7 @@ function navigateTo(routeName: string) {
   border: none;
   color: white;
   padding: 10px 0;
-  border-radius: 6px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;

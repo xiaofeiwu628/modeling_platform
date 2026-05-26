@@ -1,11 +1,43 @@
 :root {
-  --el-color-primary: #d32f2f;
-  --el-color-primary-light-3: #e06c6c;
-  --el-color-primary-light-5: #ea9595;
-  --el-color-primary-light-7: #f3bebe;
-  --el-color-primary-light-8: #f7d2d2;
-  --el-color-primary-light-9: #fbe8e8;
-  --el-color-primary-dark-2: #a82525;
+  /* 01 颜色规范 */
+  /* 主色 */
+  --el-color-primary: #D70000;
+  --el-color-primary-light-3: #E34D4D;
+  --el-color-primary-light-5: #EB8080;
+  --el-color-primary-light-7: #F3B3B3;
+  --el-color-primary-light-8: #F7CCCC;
+  --el-color-primary-light-9: #FBE6E6;
+  --el-color-primary-dark-2: #AC0000;
+
+  /* 辅助色 */
+  --el-color-success: #34C447;
+  --el-color-warning: #F59F34;
+  --el-color-danger: #FF6263;
+  --el-color-info: #2A9EF7;
+
+  /* 中性色 (字体颜色) */
+  --el-text-color-primary: #26292C;
+  --el-text-color-regular: #414547;
+  --el-text-color-secondary: #6C7378;
+  --el-text-color-disabled: #6C7378;
+
+  /* 背景/边框/线条色 */
+  --el-bg-color-page: #EEEEEE;
+  --el-bg-color: #EEEEEE;
+  --el-border-color: #DBDBDB;
+  --el-border-color-light: #DBDBDB;
+  --el-fill-color-light: #F5F7F9;
+  --el-fill-color-blank: #F5F7F9;
+
+  /* 03 按钮使用 */
+  --el-border-radius-base: 4px;
+  
+  /* 04 输入框 */
+  --el-input-bg-color: #F5F7F9;
+  --el-input-border-color: #DBDBDB;
+  --el-input-focus-border-color: #F0D909;
+  --el-disabled-bg-color: #F0F0F0;
+  --el-disabled-text-color: #6C7378;
 }
 
 *{
@@ -16,8 +48,8 @@
 /*以el-button为基础*/
 .my-button{
     z-index: 100;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px 0 rgba(211, 47, 47, 0.4)
+    border-radius: 4px !important;
+    box-shadow: 0 2px 12px 0 rgba(215, 0, 0, 0.4)
 }
 .my-title{
     font-size:18px;
@@ -73,4 +105,17 @@
 .el-table th.el-table__cell.is-leaf,
 .el-table td.el-table__cell.is-leaf{
     border: 1px solid rgba(211, 47, 47, 0.1);
+}
+
+/* 04 输入框 聚焦阴影 */
+.el-input__wrapper.is-focus, .el-textarea__inner:focus {
+  box-shadow: 0 0 0 1px #F0D909 inset !important;
+}
+
+/* 07 选项卡 选中态下划线高亮 */
+.el-tabs__item.is-active {
+  color: var(--el-color-primary) !important;
+}
+.el-tabs__active-bar {
+  background-color: var(--el-color-primary) !important;
 }

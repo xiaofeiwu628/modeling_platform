@@ -331,7 +331,7 @@ function executeLogoff() {// 执行注销账号操作
   gap: 8px;
   cursor: pointer;
   padding: 6px 12px;
-  border-radius: 30px;
+  border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.1);
   transition: all 0.3s;
 }
@@ -383,7 +383,7 @@ function executeLogoff() {// 执行注销账号操作
 
 /* 对话框样式 */
 :deep(.custom-dialog) {
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 

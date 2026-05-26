@@ -306,7 +306,7 @@ onMounted(async () => {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #a82525, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -343,7 +343,7 @@ onMounted(async () => {
 
 .metric-card {
   background: rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px 20px;
   text-align: center;
   backdrop-filter: blur(10px);
@@ -370,7 +370,7 @@ onMounted(async () => {
 .content-panel {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   padding: 20px;
 }
@@ -402,18 +402,18 @@ onMounted(async () => {
 /* 表格容器 */
 .table-container {
   margin: 20px 0;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .data-table {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 /* 表格样式优化 */
 :deep(.el-table) {
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
 }
@@ -580,7 +580,7 @@ onMounted(async () => {
   gap: 20px;
   background-color: #f8f9fa;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 4px;
   border-left: 4px solid #d32f2f;
 }
 
@@ -604,12 +604,12 @@ onMounted(async () => {
 /* 实体标签表格 */
 .labels-table {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .entity-tag {
-  color: #e6a23c;
+  color: var(--el-color-warning);
   border-color: rgba(230, 162, 60, 0.2);
   background-color: rgba(230, 162, 60, 0.1);
   font-weight: 500;

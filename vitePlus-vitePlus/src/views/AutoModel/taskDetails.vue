@@ -1022,7 +1022,7 @@ export default {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #a82525, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -1067,7 +1067,7 @@ export default {
 .main-content-wrapper {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
   padding: 20px;
   min-height: calc(100vh - 150px);
@@ -1080,7 +1080,7 @@ export default {
   align-items: center;
   padding: 20px 30px;
   background-color: #f8fafc;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid #ebeef5;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
   margin-bottom: 20px;
@@ -1100,7 +1100,7 @@ export default {
 
 .info-label {
   font-size: 13px;
-  color: #909399;
+  color: var(--el-color-info);
 }
 
 .info-value {
@@ -1120,7 +1120,7 @@ export default {
 }
 
 .tab-menu {
-  border-radius: 8px;
+  border-radius: 4px;
   background-color: #f1f5f9;
   border: 1px solid #ebeef5;
   overflow: hidden;
@@ -1153,7 +1153,7 @@ export default {
 
 /* 日志面板 */
 .log-panel {
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
   border: 1px solid #ebeef5;
   overflow: hidden;
@@ -1227,7 +1227,7 @@ export default {
 /* 区块卡片 */
 .section-card {
   background-color: #ffffff;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
   border: 1px solid #ebeef5;
   overflow: hidden;
@@ -1301,7 +1301,7 @@ export default {
 .feature-option {
   background-color: #f0f5fa;
   padding: 10px 15px;
-  border-radius: 6px;
+  border-radius: 4px;
   margin-bottom: 15px;
   color: #d32f2f;
   font-weight: 500;
@@ -1315,7 +1315,7 @@ export default {
   gap: 10px;
   padding: 10px 15px;
   background-color: #f0f5fa;
-  border-radius: 6px;
+  border-radius: 4px;
   margin-bottom: 20px;
   color: #a82525;
   font-weight: 500;

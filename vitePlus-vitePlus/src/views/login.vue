@@ -351,7 +351,7 @@ onMounted(() => {
   width: 400px;
   padding: 40px;
   background: white;
-  border-radius: 12px;
+  border-radius: 4px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
@@ -457,7 +457,7 @@ onMounted(() => {
 }
 
 :deep(.el-button) {
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 :deep(.el-checkbox__label) {

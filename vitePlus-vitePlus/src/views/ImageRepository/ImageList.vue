@@ -1046,7 +1046,7 @@ function toServicePage(param: ImageServiceItem) {
 // 设置状态样式
 function setStateStyle(param: string) {
   if (param === '运行中' || param === 'running') {
-    return { "background-color": "#409eff", "color": "white", "width": "80px" }
+    return { "background-color": "var(--el-color-primary)", "color": "white", "width": "80px" }
   } else if (param === '部署中' || param === 'starting') {
     return { "background-color": "#69B0E9", "color": "white", "width": "80px" }
   } else if (param === '停止' || param === 'stoped' || param === 'exited') {
@@ -1103,7 +1103,7 @@ onMounted(() => {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #d32f2f, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -1138,7 +1138,7 @@ onMounted(() => {
 
 .metric-card {
   background: rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px 20px;
   text-align: center;
   backdrop-filter: blur(10px);
@@ -1164,7 +1164,7 @@ onMounted(() => {
 .content-panel {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   padding: 20px;
   min-height: calc(100vh - 210px);
@@ -1197,7 +1197,7 @@ onMounted(() => {
   margin-bottom: 20px;
   padding: 15px 20px;
   background-color: #f9fafc;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
@@ -1267,7 +1267,7 @@ onMounted(() => {
 }
 
 .table-container {
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   margin-bottom: 25px;
@@ -1379,7 +1379,7 @@ onMounted(() => {
 
 /* 对话框样式统一 */
 .image-dialog, .upload-dialog, .uploading-dialog, .confirm-dialog {
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -1401,7 +1401,7 @@ onMounted(() => {
 
 :deep(.el-tag) {
   padding: 4px 12px;
-  border-radius: 12px;
+  border-radius: 4px;
   font-weight: 500;
 }
 
@@ -1412,7 +1412,7 @@ onMounted(() => {
 }
 
 :deep(.el-upload-dragger:hover) {
-  border-color: #409EFF;
+  border-color: var(--el-color-primary);
   background-color: rgba(64, 158, 255, 0.05);
 }
 
@@ -1437,7 +1437,7 @@ onMounted(() => {
 .create-btn {
   background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   transition: all 0.3s;
   padding: 8px 16px;
   font-weight: 500;
@@ -1463,7 +1463,7 @@ onMounted(() => {
 }
 /* 弹窗样式统一优化 */
 :deep(.el-dialog) {
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
@@ -1573,7 +1573,7 @@ onMounted(() => {
 .upload-dialog :deep(.el-upload-dragger) {
   border: 2px dashed #d32f2f;
   background-color: #f8fafc;
-  border-radius: 8px;
+  border-radius: 4px;
   transition: all 0.3s;
 }
 
@@ -1595,7 +1595,7 @@ onMounted(() => {
 }
 
 .upload-dialog :deep(.el-upload__tip) {
-  color: #909399;
+  color: var(--el-color-info);
   font-size: 13px;
   margin-top: 10px;
 }
@@ -1615,7 +1615,7 @@ onMounted(() => {
 .uploading-dialog .progress-message {
   padding: 15px;
   background-color: #f8fafc;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid #e0e7ee;
   width: 100%;
   min-height: 100px;
@@ -1638,7 +1638,7 @@ onMounted(() => {
 .confirm-dialog .confirm-title {
   font-size: 18px;
   font-weight: 600;
-  color: #f56c6c;
+  color: var(--el-color-danger);
 }
 
 .confirm-dialog .confirm-content {
@@ -1648,12 +1648,12 @@ onMounted(() => {
   line-height: 1.8;
   color: #606266;
   background-color: rgba(245, 108, 108, 0.05);
-  border-radius: 6px;
+  border-radius: 4px;
   margin: 10px 0 20px;
 }
 
 .confirm-dialog .confirm-content b {
-  color: #f56c6c;
+  color: var(--el-color-danger);
   padding: 0 3px;
   font-size: 17px;
 }

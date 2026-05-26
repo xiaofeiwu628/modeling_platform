@@ -691,7 +691,7 @@ function downloadAnnotatedFile() {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #a82525, #d32f2f);
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -727,7 +727,7 @@ function downloadAnnotatedFile() {
 .metric-card {
   min-width: 92px;
   background: rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px 20px;
   text-align: center;
   backdrop-filter: blur(10px);
@@ -747,7 +747,7 @@ function downloadAnnotatedFile() {
 .content-panel {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   padding: 20px;
   min-height: calc(100vh - 210px);
@@ -762,7 +762,7 @@ function downloadAnnotatedFile() {
 .control-panel,
 .table-panel {
   border: 1px solid #ebeef5;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 18px;
   background: #fff;
 }
@@ -782,7 +782,7 @@ function downloadAnnotatedFile() {
 }
 
 .upload-tip {
-  color: #909399;
+  color: var(--el-color-info);
   font-size: 12px;
   margin-top: 6px;
 }
@@ -848,7 +848,7 @@ function downloadAnnotatedFile() {
 
 .annotation-table {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .pagination-row {

@@ -1294,7 +1294,7 @@ export default {
   align-items: center;
   padding: 20px 30px;
   background: linear-gradient(to right, #d32f2f, #d32f2f); /* 更浅的蓝色渐变 */
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   margin: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -1330,7 +1330,7 @@ export default {
 
 .metric-card {
   background: rgba(255, 255, 255, 0.18); /* 略微增加透明度 */
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 10px 20px;
   text-align: center;
   backdrop-filter: blur(10px);
@@ -1356,7 +1356,7 @@ export default {
 .content-panel {
   background-color: white;
   margin: 0 20px 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   padding: 20px;
   min-height: calc(100vh - 210px);
@@ -1368,7 +1368,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   background: linear-gradient(to right, #f6f8fa, #e9ecef);
-  border-radius: 8px;
+  border-radius: 4px;
   margin-bottom: 25px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
 }
@@ -1381,7 +1381,7 @@ export default {
 
 .tech-input {
   width: 360px;
-  border-radius: 6px;
+  border-radius: 4px;
   transition: all 0.3s;
 }
 
@@ -1391,14 +1391,14 @@ export default {
 }
 
 .tech-select {
-  border-radius: 6px;
+  border-radius: 4px;
   min-width: 150px;
 }
 
 .create-btn, .search-btn {
   background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   transition: all 0.3s;
 }
 
@@ -1410,12 +1410,12 @@ export default {
 
 .table-container {
   margin: 0;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .tech-table {
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
@@ -1504,7 +1504,7 @@ export default {
 
 /* 修改按钮样式 */
 .edit-btn {
-  color: #409EFF !important;
+  color: var(--el-color-primary) !important;
   border: 1px solid #c6e2ff;
   background-color: rgba(64, 158, 255, 0.05);
 }
@@ -1517,7 +1517,7 @@ export default {
 
 /* 删除按钮样式 */
 .delete-btn {
-  color: #F56C6C !important;
+  color: var(--el-color-danger) !important;
   border: 1px solid #fbc4c4;
   background-color: rgba(245, 108, 108, 0.05);
 }
@@ -1594,7 +1594,7 @@ export default {
 .expanded-table {
   margin-left: 0 !important; /* 移除原来的左边距 */
   width: 100% !important; /* 使用全宽 */
-  border-radius: 6px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   border: 1px solid #ebeef5;

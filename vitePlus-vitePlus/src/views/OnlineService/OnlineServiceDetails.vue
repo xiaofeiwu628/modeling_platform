@@ -872,7 +872,7 @@ export default {
   align-items: center;
   padding: 24px 32px;
   background: linear-gradient(135deg, #a82525, #d32f2f);
-  border-radius: 12px;
+  border-radius: 4px;
   color: white;
   margin: 20px 20px 0;
   box-shadow: 0 8px 20px rgba(168, 37, 37, 0.15);
@@ -911,7 +911,7 @@ export default {
   color: #ffffff;
   background: rgba(255, 255, 255, 0.2);
   padding: 8px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -956,7 +956,7 @@ export default {
 .info-section {
   margin-bottom: 0;
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
@@ -1036,7 +1036,7 @@ export default {
 .header-table, 
 .body-table {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
 }
@@ -1045,7 +1045,7 @@ export default {
   --el-table-header-bg-color: #f0f5fa;
   --el-table-border-color: #e5e9f2;
   --el-table-row-hover-bg-color: #f0f7ff;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -1098,7 +1098,7 @@ export default {
 :deep(.el-tag.el-tag--success) {
   background-color: rgba(103, 194, 58, 0.1);
   border-color: rgba(103, 194, 58, 0.2);
-  color: #67c23a;
+  color: var(--el-color-success);
 }
 
 :deep(.el-tag.el-tag--info) {
@@ -1110,19 +1110,19 @@ export default {
 :deep(.el-tag.el-tag--primary) {
   background-color: rgba(64, 158, 255, 0.1);
   border-color: rgba(64, 158, 255, 0.2);
-  color: #409EFF;
+  color: var(--el-color-primary);
 }
 
 :deep(.el-tag.el-tag--danger) {
   background-color: rgba(245, 108, 108, 0.1);
   border-color: rgba(245, 108, 108, 0.2);
-  color: #f56c6c;
+  color: var(--el-color-danger);
 }
 
 :deep(.el-tag.el-tag--warning) {
   background-color: rgba(230, 162, 60, 0.1);
   border-color: rgba(230, 162, 60, 0.2);
-  color: #e6a23c;
+  color: var(--el-color-warning);
 }
 
 /* 资源规格卡片样式 */
@@ -1135,7 +1135,7 @@ export default {
   align-items: center;
   padding: 24px;
   background: linear-gradient(145deg, #ffffff, #f8fafc);
-  border-radius: 12px;
+  border-radius: 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   border: 1px solid #ebeef5;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -1171,7 +1171,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 4px;
   margin-right: 24px;
   background: linear-gradient(135deg, rgba(211, 47, 47, 0.2), rgba(211, 47, 47, 0.1));
   color: #d32f2f;
@@ -1223,7 +1223,7 @@ export default {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   background-color: #f8fafc;
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid #ebeef5;
   font-size: 14px;
   word-break: break-all;
@@ -1240,19 +1240,19 @@ export default {
   background: #f8fafc;
   padding: 0 8px;
   font-size: 12px;
-  color: #909399;
+  color: var(--el-color-info);
   border: 1px solid #ebeef5;
   border-radius: 4px;
 }
 
 .url-note {
   margin-top: 12px;
-  color: #f56c6c;
+  color: var(--el-color-danger);
   font-size: 13px;
   background: rgba(245, 108, 108, 0.05);
   padding: 8px 12px;
-  border-radius: 6px;
-  border-left: 3px solid #f56c6c;
+  border-radius: 4px;
+  border-left: 3px solid var(--el-color-danger);
 }
 
 .code-example {
@@ -1262,7 +1262,7 @@ export default {
 .code-example pre {
   background-color: #1f2937;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: auto;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   white-space: pre-wrap;
@@ -1331,14 +1331,14 @@ export default {
 
 .header-separator,
 .form-separator {
-  color: #909399;
+  color: var(--el-color-info);
   font-weight: 600;
 }
 
 .body-container {
   width: 100%;
   border: 1px solid #ebeef5;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -1358,7 +1358,7 @@ export default {
   background-color: #1f2937;
   color: #e5e7eb;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 14px;
   line-height: 1.6;
@@ -1382,12 +1382,12 @@ export default {
 .test-btn {
   background: linear-gradient(to right, #a82525, #d32f2f);
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 4px 12px rgba(168, 37, 37, 0.22);
 }
 
 .response-time {
-  color: #909399;
+  color: var(--el-color-info);
   font-size: 12px;
 }
 
@@ -1397,7 +1397,7 @@ export default {
   margin-bottom: 20px;
   padding: 16px;
   background: #f8fafc;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .status-item {
@@ -1426,7 +1426,7 @@ export default {
   padding: 16px;
   background: #f8fafc;
   border: 1px solid #ebeef5;
-  border-radius: 8px;
+  border-radius: 4px;
   margin-bottom: 20px;
 }
 
@@ -1455,7 +1455,7 @@ export default {
 }
 
 .empty-result {
-  color: #909399;
+  color: var(--el-color-info);
   font-style: italic;
 }
 
@@ -1468,7 +1468,7 @@ export default {
   max-height: 500px;
   overflow: auto;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 4px;
   white-space: pre-wrap;
   word-break: break-all;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
@@ -1482,12 +1482,12 @@ export default {
 }
 
 .error-title {
-  color: #f56c6c;
+  color: var(--el-color-danger);
 }
 
 .error-data {
   background: #fef0f0;
-  color: #f56c6c;
+  color: var(--el-color-danger);
   border: 1px solid #fbc4c4;
 }
 

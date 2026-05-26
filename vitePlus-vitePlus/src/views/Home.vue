@@ -271,7 +271,7 @@ onMounted(() => {
   border: none;
   font-size: 16px;
   padding: 12px 24px;
-  border-radius: 6px;
+  border-radius: 4px;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
@@ -289,7 +289,7 @@ onMounted(() => {
   border: 1px solid #d32f2f;
   font-size: 16px;
   padding: 12px 24px;
-  border-radius: 6px;
+  border-radius: 4px;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
@@ -368,7 +368,7 @@ onMounted(() => {
   position: relative;
   margin-top: -50px;
   z-index: 10;
-  border-radius: 12px;
+  border-radius: 4px;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -433,7 +433,7 @@ onMounted(() => {
 .feature-card {
   background: #ffffff;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 30px;
   transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -483,7 +483,7 @@ onMounted(() => {
 .access-card {
   background: #ffffff;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 25px;
   transition: all 0.3s ease;
   cursor: pointer;
