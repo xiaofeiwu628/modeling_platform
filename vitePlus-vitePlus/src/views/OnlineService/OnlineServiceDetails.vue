@@ -166,13 +166,6 @@
             <el-form-item label="请求URL">
               <div class="url-container">
                 <div class="url-value">{{ formOfRequestDesc.url }}</div>
-                <div class="direct-url-val" v-if="formOfRequestDesc.directUrl && formOfRequestDesc.directUrl !== formOfRequestDesc.url">
-                  <span class="url-tag-direct">容器直连 (调试)</span>
-                  <code>{{ formOfRequestDesc.directUrl }}</code>
-                  <el-button type="primary" link size="small" @click="testForm.url = formOfRequestDesc.directUrl" style="margin-left: 10px;">
-                    使用此链接测试
-                  </el-button>
-                </div>
                 <div class="url-note" v-if="formOfBaseInformation.serviceType === 'custom'">
                   注：您可以根据需要在上述URL基础上进行延伸，如：{{ formOfRequestDesc.url }}/example
                 </div>
@@ -294,7 +287,7 @@
             </el-row>
 
             <div class="url-note test-note">
-              提示：平台已开启网关代理。以 <code>/online-api</code> 开头的请求将自动代理转发至目标网关。如果您直接输入完整的 <code>http://</code> 容器随机端口地址，请求将直接发送给目标（若出现跨域错误，请检查目标容器配置或后端是否保存了正确的网关地址）。
+              提示：平台已启用同源网关代理 (<code>/api/task/...</code>)。所有的 API 测试请求将自动由后端安全转发至目标模型容器，彻底避免浏览器的跨域 (CORS) 限制。
             </div>
 
             <!-- 配置 Tabs -->
@@ -534,7 +527,6 @@ export default {
       specificDesc2: {},
       serviceId: '',
       formOfResource: {},
-      onlineServiceTarget: import.meta.env.VITE_ONLINE_SERVICE_TARGET || '',
       testLoading: false,
       targetHost: '',
       testStatus: null,
@@ -656,10 +648,10 @@ export default {
         this.formOfBaseInformation['kongUrl'] = res.data.kong_url;
         this.formOfResource['memory'] = (res.data.memory / 1000000000) + 'GB';
         this.formOfResource['cpuCoresNum'] = res.data.cpu_cores_num;
-        this.formOfRequestDesc.directUrl = res.data.direct_url || '';
+        this.formOfRequestDesc.directUrl = ''; // Obsolete
         
-        // Auto-construct the proxy URL if backend missed it in the JSON response
-        let proxyUrl = res.data.proxy_url || res.data.url;
+        // Forcefully construct the proxy URL and ignore the raw container URL
+        let proxyUrl = res.data.proxy_url;
         if (!proxyUrl && res.data.kong_url) {
           try {
             const parsedKong = new URL(res.data.kong_url);
@@ -667,9 +659,11 @@ export default {
           } catch (e) {
             proxyUrl = `/api/task/OnlineService/UserService/${this.serviceId}`;
           }
+        } else if (!proxyUrl) {
+          proxyUrl = `/api/task/OnlineService/UserService/${this.serviceId}`;
         }
         
-        const targetUrl = proxyUrl || '';
+        const targetUrl = proxyUrl;
         this.formOfRequestDesc.url = this.getUsableRequestUrl(targetUrl);
         if (res.data.request_data) {
           this.specificDesc1 = JSON.parse(JSON.stringify(res.data.request_data));
@@ -706,20 +700,7 @@ export default {
     },
     getUsableRequestUrl(url) {
       if (!url) return '';
-      if (url === this.formOfRequestDesc.directUrl) {
-        return url;
-      }
       let targetOrigin = window.location.origin;
-      if (this.onlineServiceTarget) {
-        try {
-          const targetUrl = new URL(this.onlineServiceTarget);
-          targetOrigin = targetUrl.origin;
-        } catch (e) {
-          if (this.onlineServiceTarget.startsWith('http://') || this.onlineServiceTarget.startsWith('https://')) {
-            targetOrigin = this.onlineServiceTarget;
-          }
-        }
-      }
       try {
         const parsed = new URL(url);
         return `${targetOrigin}${parsed.pathname}${parsed.search}`;
