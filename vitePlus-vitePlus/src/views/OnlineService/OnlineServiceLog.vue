@@ -207,7 +207,7 @@ function getWsUrl(path: string): string {
 
   const isSecure = window.location.protocol === 'https:';
   const protocol = isSecure ? 'wss:' : 'ws:';
-  return `${protocol}://${window.location.host}/api/algo${path}`;
+  return `${protocol}//${window.location.host}/api/algo${path}`;
 }
 
 /** 连接日志WebSocket并批量渲染日志 */
