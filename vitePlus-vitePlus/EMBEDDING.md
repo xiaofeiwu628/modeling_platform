@@ -373,32 +373,22 @@ location /modeling/pyanalysis/ {
 }
 ```
 
-自动建模任务调度代理配置 (通常指向网关下的 `/algo`，根据实际情况配置)：
 
-```nginx
-location /modeling/before/ {
-  rewrite ^/modeling/before/(.*)$ /algo/$1 break;
-  proxy_pass http://后端网关IP:8080;
-}
-```
+> **核心部署优势（无 IP 强依赖策略）**：
+> 当前版本前端代码已实现“环境无关”的相对路径兜底逻辑。在打包部署时，建议**清空 `.env.production` 中的所有 IP 变量**（保持为空）。
+> 这样前端会自动使用相对路径（如 `/api`、`/pyanalysis`），浏览器会自动带上当前访问的域名/IP，最后统一交由上述的 Nginx 规则进行分发。
+>
+> 这种架构带来了极大便利：
+> 1. **无需修改 `/online-api/`**：API 测试现在由 Java 后端 `/api/task/OnlineService/UserService/{id}` 原生同源代理，无需配置独立的在线服务端口。
+> 2. **无需修改 WebSocket `/before/`**：日志 WebSocket 会自动降级使用 `wss://当前主机/api/algo`，统一走主网关代理。
 
-在线服务 API 测试代理配置 (默认为 8002 端口)：
-
-```nginx
-location /modeling/online-api/ {
-  rewrite ^/modeling/online-api/(.*)$ /$1 break;
-  proxy_pass http://在线服务网关IP:8002;
-}
-```
-
-> **说明**：前端在线服务详情页的「API测试」功能会优先把匹配 `VITE_ONLINE_SERVICE_TARGET` 的服务地址转换为 `/online-api/...`，通过同源代理发送请求，从而避免浏览器跨域限制。生产环境请保证 `.env.production` 中的 `VITE_ONLINE_SERVICE_TARGET` 配置项与 Nginx `proxy_pass` 的真实目标地址保持一致。
-
-实际路径以部署目录、Nginx root/alias 配置和后端地址为准。
+实际路径以部署目录、Nginx root/alias 配置和后端真实 IP 地址为准。
 
 ## 7. 注意事项
 
-1. 嵌入页面需要先完成建模平台登录并让页面能够读取 Token。
-2. Token 失效后，建模平台前端会跳转到 `/login`。
-3. 如果 iframe 页面刷新后 404，优先检查 Nginx `try_files` 配置。
-4. 如果接口 401 或提示未登录，优先检查 `localStorage` 中是否存在 `Token` 和 `token`。
-5. 如果部署在子路径 `/modeling/`，构建时需要确保前端 base 与路由 base 使用同一个前缀。
+1. **协议一致性 (HTTPS/HTTP)**：如果第三方平台是 `https://`，则本建模平台的 Nginx 也**必须**配置 SSL 证书提供 `https://` 服务。否则浏览器的 Mixed Content 机制会强制拦截 iframe。
+2. **Nginx 防嵌套头**：如果嵌入后浏览器提示“拒绝连接”，请检查本建模平台的 Nginx 全局配置中是否包含了 `add_header X-Frame-Options SAMEORIGIN;` 或相关 CSP 限制，如有需移除或改为 `ALLOW-FROM`。
+3. 嵌入页面需要先完成建模平台登录并让页面能够读取 Token。
+4. Token 失效后，建模平台前端会跳转到 `/login`。
+5. 如果 iframe 页面刷新后 404，优先检查 Nginx `try_files` 配置。
+6. 如果部署在子路径 `/modeling/`，构建时需要确保前端 base 与路由 base 使用同一个前缀。
